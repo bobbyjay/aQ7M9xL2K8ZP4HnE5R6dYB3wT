@@ -1,0 +1,131 @@
+
+.signincontainer1{
+    background: white;
+    padding: 10px;
+    border-radius: 20px;
+}
+.signincontainer{
+    display: flex;
+    justify-content: center;
+}
+.login-form-container{
+    display: grid;
+    grid-template-rows: auto auto auto;
+    gap: 20px;
+}
+.welc-txt{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ---- ICON ---- */
+.loginsystemicon{
+    max-width: 32px;
+}
+
+/* ---- INPUT SECTION ---- */
+.input-txt{
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    padding: 10px;
+    background: #a4e6a4b7;
+    margin: 0 50px;
+    border-radius: 10px;
+}
+
+.form{
+    width: 200px;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding-left: 10px;
+}
+
+.form:focus{
+    outline: none;
+}
+.form::placeholder{
+    color: gray;
+}
+.form::-webkit-input-placeholder {
+    color: gray;
+}
+.form:-ms-input-placeholder {
+    color: gray;
+}
+.form:-moz-placeholder {
+    color: gray;
+    opacity: 1;
+}
+
+/* ---- INPUT ERROR ---- */
+.input-error {
+    color: red;
+    animation: shake 0.2s ease-in-out 2;
+}
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+/* ---- LOGIN/MEMBER BUTTON ---- */
+.form2{
+    display: flex;
+    justify-content: center;
+}
+
+.reftx1{
+    text-align: center;
+    margin-top: 10px;
+}
+
+.signupref{
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.signupref:hover{
+    color: orangered;
+}
+.signupref:active{
+    color: red;
+}
+
+/*--- THE WEBSITE BELOW 850PX ---*/
+@media (max-width: 850px) {
+    .consept1{
+        display: none;
+    }
+    .LMbtn1{
+        margin: 20px 0;
+        display: flex;
+        justify-content: center;
+    }
+    .loginsystemicon{
+        width: 24px;
+    }
+}
+
+/*--- THE WEBSITE ABOVE 850PX ---*/
+@media (min-width: 850px) {
+    .sign-txt{
+        display: none;
+    }
+   
+    .LMbtn1{
+        display: none;
+    }
+    .conseptcover{
+        display: grid;
+        grid-template-columns: auto auto;
+    }
+    .form{
+        width: 300px;
+    }
+    .reftx1{
+        margin-top: 20px;
+    }
+}

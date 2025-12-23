@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'MaximumVoltage';
+    src: url('../assets/fonts/MaximumVoltage.woff2') format('woff2'),
+        url('../assets/fonts/MaximumVoltage.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'SuperSquad';
+    src: url('../assets/fonts/SuperSquad.woff2') format('woff2'),
+        url('../assets/fonts/SuperSquad.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+.hero-title{
+    font-family: "MaximumVoltage", sans-serif;
+}

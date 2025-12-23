@@ -1,0 +1,287 @@
+/* ---------- HEADER ---------- */
+.heading-containner-for-cutmsppt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1a1a1a;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 12px;
+    z-index: 500;
+    box-sizing: border-box;
+    overflow: hidden; /* ensure nothing sticks out of header */
+}
+
+/* reserve space so main content is visible under the fixed header */
+.heading-containner-for-cutmsppt1 {
+    width: 100%;
+    height: 72px; /* header height reserve */
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* left area (back button) */
+.heading-containner-div-for-cutmsppt-1 {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0;
+}
+
+/* middle area (title) */
+.heading-containner-div-for-cutmsppt-2 {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: left;
+    margin: 0;
+    padding: 0 8px; /* small horizontal padding that won't overflow */
+    min-width: 0; /* CRITICAL: allow text to shrink/wrap inside flex */
+}
+
+.cutmsppt-heading-txt {
+    font-size: clamp(16px, 3.5vw, 26px);
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    overflow-wrap: break-word; /* allow wrapping instead of growing */
+    word-break: break-word;
+    white-space: normal;
+}
+
+/* ---------- BACK BUTTON / ICON ---------- */
+.back-icon-btn {
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.back-icon-for-cutmsppt {
+    display: block;
+    width: 40px;
+    height: auto;
+    padding: 6px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.08);
+    box-sizing: border-box;
+    object-fit: contain;
+}
+
+/* Ensure back icon never forces overflow on narrow screens */
+.back-icon-for-cutmsppt,
+.support-contact-icons {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ---------- MAIN / SECTIONS ---------- */
+/* main content sits below header — keeps full width and never overflows */
+.main-containner {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 88px 12px 20px; /* top padding to clear fixed header (72px) + spacing */
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow: hidden; /* prevent internal overflow from creating horizontal scroll */
+}
+
+/* each section uses full width and cannot overflow */
+.section-containner {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+/* ---------- SUPPORT ROW ---------- */
+/* row is a single flex line that will not expand beyond viewport */
+.content-div-cotainner {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    background: green;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    overflow: hidden; /* truncate any overflow visually */
+}
+
+/* icon container is fixed size and cannot grow */
+.support-contact-icons-div {
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    min-height: 32px;
+    max-height: 32px;
+    background: rgba(15, 75, 15, 0.562);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 5px;
+}
+
+/* icon image sizing - will never overflow parent */
+.support-contact-icons {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+/* text container must be flexible but not grow beyond available space */
+.article-div-containner {
+    flex: 1 1 auto;      /* can shrink and grow within available space */
+    min-width: 0;        /* CRITICAL: allows content to shrink inside flex */
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+/* headings and paragraphs wrap and never push width */
+.article-div-containner h3 {
+    font-size: 16px;
+    margin: 0 0 4px 0;
+    padding: 0;
+    line-height: 1.15;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.article-div-containner p {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    color: #d4d1d1;
+    line-height: 1.3;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.a-tag{
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+/* arrow area must not grow; keeps the row inside viewport */
+.forwarder-for-main {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0 6px;
+    font-size: 20px;
+    font-weight: 800;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* ---------- FOOTER ---------- */
+.footer-for-cutmsppt {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 20px 12px;
+    margin-top: 20px;
+    background: #111;
+    color: #fff;
+    text-align: center;
+    overflow: hidden;
+}
+
+
+/* small inline group centered in footer */
+.bet-footer-tx-002-div {
+    color: #fff;
+    font-weight: 700;
+    box-sizing: border-box;
+}
+
+.footer-for-cutmsppt{
+    position: absolute;
+    bottom: 0;
+    width:100%;
+    padding:20px 12px;
+    text-align:center;
+    background:#1a1a1a;
+    font-size:clamp(12px,2vw,16px);
+}
+
+
+
+/* ---------- RESPONSIVE TWEAKS ---------- */
+@media (max-width: 490px) {
+
+    .heading-containner-for-cutmsppt {
+        padding: 8px 10px;
+    }
+
+    .heading-containner-div-for-cutmsppt-2 {
+        padding: 0 6px;
+    }
+
+    .back-icon-for-cutmsppt {
+        width: 34px;
+        padding: 5px;
+    }
+
+    .support-contact-icons-div {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+    }
+
+    .support-contact-icons {
+        max-width: 90%;
+        max-height: 90%;
+    }
+
+    .forwarder-for-main {
+        padding: 0 4px;
+        font-size: 18px;
+    }
+
+    .main-containner {
+        padding: 88px 10px 16px;
+    }
+
+    .article-div-containner h3 {
+        font-size: 15px;
+    }
+
+    .article-div-containner p {
+        font-size: 13px;
+    }
+}
+
+@media (min-width: 490px) {
+    .support-contact-icons-div {
+        width: 64px;
+        min-width: 64px;
+        height: 64px;
+        min-height: 64px;
+        max-height: 64px;
+    }
+}

@@ -1,0 +1,65 @@
+/* ================= UI & SAFETY CSS ================= */
+
+.tos-page{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+  background:#0f0f0f;
+  color:#eaeaea;
+}
+
+.tos-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:16px;
+  border-bottom:1px solid #222;
+}
+
+.tos-title{
+  font-size:clamp(18px,4vw,26px);
+  font-weight:700;
+}
+
+.tos-main{
+  max-width:900px;
+  margin:10vh auto 0;
+  padding:0 14px 40px;
+  box-sizing:border-box;
+}
+
+.tos-section{
+  margin-bottom:32px;
+}
+
+.tos-section h3{
+  margin-bottom:10px;
+  color:#9cff57;
+}
+
+.tos-section p,
+.tos-section li{
+  line-height:1.7;
+  word-break:break-word;
+  overflow-wrap:break-word;
+}
+
+.tos-list,
+.tos-outline{
+  padding-left:1.2rem;
+}
+
+.tos-effective{
+  text-align:center;
+  border-bottom:3px solid #9cff57;
+  display:inline-block;
+  padding-bottom:6px;
+}
+
+.tos-footer{
+  width:100%;
+  padding:20px 12px;
+  text-align:center;
+  background:#1a1a1a;
+  font-size:clamp(12px,2vw,16px);
+}

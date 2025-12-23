@@ -1,0 +1,73 @@
+.ep-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.ep-modal {
+  background: white;
+  width: 60%;
+  max-width: 420px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  animation: ep-pop .16s ease-out;
+}
+
+@keyframes ep-pop {
+  from { transform: translateY(-10px) scale(.96); opacity: .2; }
+  to   { transform: translateY(0)     scale(1);   opacity: 1; }
+}
+
+.ep-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ep-close {
+  background: none;
+  border: none;
+  font-size: clamp(12px, 4vw, 32px);
+  cursor: pointer;
+  color: #555;
+}
+
+.ep-message {
+  margin-top: 10px;
+  font-size: clamp(12px, 4vw, 32px);
+}
+
+.ep-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.ep-btn {
+  padding: 8px 14px;
+  background: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.addnmdiv{
+    display: flex;
+}
+.anmtx{
+    padding: 30px 0;
+}
+.addnmdivmain{
+    display: flex;
+    justify-content: end;
+}
+.sctx{
+    color: white;
+    text-align: center;
+}

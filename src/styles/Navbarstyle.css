@@ -1,0 +1,223 @@
+:root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 133 57% 47%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 72.22% 50.59%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 142.1 76.2% 36.3%;
+    --radius: .5rem;
+    --color-brand-50: #eefef2;
+    --color-brand-100: #1c1c1c;
+    --color-brand-200: #a5feb8;
+    --color-brand-300: #7bf99b;
+    --color-brand-400: #3deb71;
+    --color-brand-500: #00d64f;
+    --color-brand-600: #00c042;
+    --color-brand-700: #009636;
+    --color-brand-800: green;
+    --color-brand-900: #07602a;
+}
+
+.navlogo{
+    width: 100px;
+}
+
+.navbaroptions{
+    display: flex;
+    justify-content: end;
+}
+
+a{
+    padding: 20px;
+    text-decoration: none;
+}
+
+.thenavbar{
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(
+    270deg,
+      rgb(1, 49, 23),
+      rgb(11, 92, 54),
+      rgb(30, 80, 72),
+      rgb(22, 22, 26)
+    );
+    background-size: 800% 800%;                     
+    animation: gradientMove 12s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.navbaroptions{
+    padding: 20px;
+}
+
+.navbaroptions1{
+    width: 100%;
+}
+
+.menuicone{
+    width: 62px;
+    padding: 20px;
+}
+
+
+.navbaroptions4 {
+  position: fixed;
+  top: 0;
+  left: 0;             /* You were missing this */
+  width: 260px;        /* Set a width */
+  z-index: 9999;       /* REQUIRED so it's visible */
+  background-color: #1c1c1c;
+  height: 100vh;
+  box-shadow: 0 0 20px 8px rgba(27, 27, 27, 0.534);
+  transition: transform 0.3s ease;
+  transform: translateX(0); /* show */
+}
+
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  z-index: 9998;
+}
+
+/* Menu icon must be on top so click works */
+.menuleb {
+  position: relative;
+  z-index: 999;
+}
+.menu-bar-line{
+    border: 1px solid rgba(255, 255, 255, 0.836);
+    font-size: 2.5em;
+    color: white;
+    padding: 0 0px 5px 13px;
+    border-radius: 10%;
+    cursor: pointer;
+}
+.menu-bar-line:hover{
+  background-color: var(--color-brand-900);
+}
+.menu-bar-line:active{
+    border: 1px solid var(--color-brand-700);
+    color: var(--color-brand-700);
+}
+
+.txmenu{
+    padding: 5px 10px;
+    font-family: sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.menuscrollcover{
+    padding: 80px 20px;
+}
+
+.menucover{
+    display: flex;
+    color: var(--color-brand-50);
+}
+
+/* making navbar icon */
+.menu-bar-span-con{
+    padding: auto;
+}
+
+
+/* LINK WRAPPER */
+.nav-op-txt {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 140px;
+  height: 42px;
+
+  color: white;
+  font-family: sans-serif;
+  font-weight: 800;
+  text-decoration: none;
+
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* TEXT */
+.bx-cycoani {
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+/* BACKGROUND ANIMATION BOX */
+.nav-op-ani {
+  position: absolute;
+  inset: 0;
+
+  background: white;
+  border-radius: 8px;
+
+  transform: scale(0);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+/* HOVER EFFECT */
+.nav-op-txt:hover .nav-op-ani {
+  transform: scale(1);
+}
+
+.nav-op-txt:hover .bx-cycoani {
+  color: #1c1c1c;
+}
+
+
+@media (max-width: 850px) {
+    .navbaroptions1{
+        display: none;
+    }
+}
+
+.hanbugoicon{
+    width: 32px;
+}
+
+@media (min-width: 850px) {
+    .menuleb{
+        display: none;
+    }
+    .navbaroptions4{
+        display: none;
+    }
+    .menu-overlay{
+        display: none;
+    }
+}

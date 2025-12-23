@@ -1,0 +1,287 @@
+.paymentIcon{
+    max-width: 30px;
+}
+.profilecontainner{
+    color: white;
+}
+.headerdiv{
+    display: flex;
+    justify-content: space-between;
+}
+.imageandifo{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.profilepic{
+    max-width: 100px;
+    background-color: aliceblue;
+    border-radius: 100px;
+}
+
+.profilecoverdiv{
+    margin: 10px;
+}
+
+.paymentfexcover{
+    display: flex;
+    justify-content: space-between;
+    width: 90vw;
+}
+.paymentoption{
+    display: flex;
+    justify-content: center;
+}
+.paymentoptiondivinner{
+    background-color: rgb(27, 26, 26);
+    width: 65px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 15px;
+    cursor: pointer;
+    margin: 10px;
+}
+.redirecttologin{
+    display: flex;
+    justify-content: center;
+}
+.balancesection{
+    display: flex;
+    justify-content: center;
+}
+.balancediv{
+    width: 82vw;
+    padding: 30px;
+    background-color: green;
+    border-radius: 15px;
+}
+.notificationlookup{
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: black;
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+    overflow-x: scroll;
+    z-index: 100;
+}
+.transactionsectuon{
+    display: flex;
+    justify-content: center;
+}
+.transactionschema{
+    width: 82vw;
+    padding: 30px;
+    background-color: rgb(27, 26, 26);
+    border-radius: 15px;
+    list-style-type: none;
+    margin: 5px 0;
+}
+.transactionschemamaker{
+    height: 40vh;
+    overflow-y: scroll;
+}
+.transactionschemamaker::-webkit-scrollbar{
+    display: none;
+}
+.notificationdiv{
+    padding: 10px;
+}
+
+#notificationBar:checked + .notificationlookup{
+    display: block;
+}
+
+
+.disapearcheckbox{
+    display: none;
+}
+
+
+.notifydiv{
+    width: 70vw;
+    padding: 30px;
+    background-color: rgb(27, 26, 26);
+    border-radius: 15px;
+    list-style-type: none;
+    margin: 5px 0;
+}
+.cancelbtn{
+    max-width: 28px;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.settingsbox{
+    display: none;
+}
+
+#settingsbtn:checked + .settingsbox{
+    display: block;
+}
+
+.settingicon1{
+    max-width: 28px;
+    margin: 4px;
+    cursor: pointer;
+}
+.settingsdiv1{
+    margin: 15px;
+    width: 36px;
+    height: 36px;
+    background-color: rgb(27, 26, 26);
+    padding: 5px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.settingsbox{
+    position: fixed;
+    top: 0;
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+}
+#settingsbtn{
+    display: none;
+}
+.paymentoptiondivinner{
+    color: #ffffff;
+    font-family: sans-serif;
+}
+
+@media (max-width: 490px) {
+    .profilecoverdiv{
+        max-width: 60px;
+        max-height: 60px;
+        overflow: hidden;
+    }
+    .profilepic{
+        max-width: 70px;
+        background-color: rgb(27, 26, 26);
+        border-radius: 100px;
+        max-width: 60px;
+        max-height: 62px;
+    }
+    .notifyicon{
+        max-width: 28px;
+        margin: 4px;
+        cursor: pointer;
+    }
+    .notificationdiv{
+        margin: 15px;
+        width: 36px;
+        height: 36px;
+        background-color: rgb(27, 26, 26);
+        padding: 5px;
+        border-radius: 30px;
+        cursor: pointer;
+    }
+    .settingicon{
+        max-width: 28px;
+        margin: 4px;
+        cursor: pointer;
+    }
+    .settingsdiv{
+        margin: 15px;
+        width: 36px;
+        height: 36px;
+        background-color: rgb(27, 26, 26);
+        padding: 5px;
+        border-radius: 30px;
+        cursor: pointer;
+    }
+    .wbusertx{
+        font: clamp(6px, 2vw, 16px) sans-serif;
+        padding: 20px 10px;
+    }
+    .emailtx{
+        font: 1.5em sans-serif;
+    }
+    .profilepic{
+        min-width: 57px;
+        min-height: 57px;
+    }
+}
+
+
+@media (min-width: 490px) {
+    .profilepic{
+        max-width: 57px;
+        max-height: 57px;
+    }
+    .redirecttologin:hover{
+        color: rgb(243, 60, 14);
+    }
+    .notifyicon{
+        background-color: rgb(27, 26, 26);
+        border-radius: 40px;
+        min-width: 60px ;
+        height: 56px;
+        padding: 5px;
+        margin: 10px;
+        border: 2px solid rgba(78, 78, 78, 0.863);
+    }
+    .settingicon{
+        background-color: rgb(27, 26, 26);
+        border-radius: 40px;
+        min-width: 60px ;
+        height: 56px;
+        padding: 5px;
+        margin: 10px;
+        margin-top: 20px;
+        border: 2px solid rgba(78, 78, 78, 0.863);
+    }
+    
+    .wbusertx{
+        margin: 30px;
+    }
+    .balancesection{
+        padding: 1px;
+    }
+    .balancediv{
+        width: 90vw;
+        height: 10vh;
+    }
+    .abtx{
+        font-size: 2em;
+    }
+    .bstx{
+        font-size: 2em;
+    }
+    .profilepic{
+        background-color: rgb(27, 26, 26);
+        min-width: 100px;
+        min-height: 100px;
+        color: white;
+        text-align: center;
+    }
+    .sndivbox{
+        display: grid;
+        grid-template-columns: auto auto;
+    }
+    .notifyicon{
+        background-color: rgb(27, 26, 26);
+        border-radius: 40px;
+        max-width: 90px ;
+        max-height: 90px;
+        padding: 5px;
+        margin: 10px;
+        border: 2px solid rgba(78, 78, 78, 0.863);
+    }
+    .settingicon{
+        background-color: rgb(27, 26, 26);
+        border-radius: 40px;
+        max-width: 90px ;
+        max-height: 90px;
+        padding: 5px;
+        margin: 10px;
+        margin-top: 20px;
+        border: 2px solid rgba(78, 78, 78, 0.863);
+    }
+    .sec-top{
+        margin-top: 10vh;
+    }
+}
