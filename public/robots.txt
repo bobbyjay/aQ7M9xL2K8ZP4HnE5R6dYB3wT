@@ -1,0 +1,20 @@
+# Allow all search engines to crawl public pages
+User-agent: *
+Disallow: /login
+Disallow: /register
+Disallow: /verify-email
+Disallow: /profile
+Disallow: /sports
+Disallow: /bets
+Disallow: /withdrawal
+Disallow: /deposit
+Disallow: /support
+
+# Allow crawling of everything else
+Allow: /
+Allow: /about
+Allow: /terms-of-service
+Allow: /support-page
+
+# Sitemap location (helps search engines find all public URLs)
+Sitemap: https://clutchden.online/sitemap.xml
