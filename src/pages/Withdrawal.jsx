@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import "../styles/ErrorPopup.css";
+import "../styles/errorPopup.css";
 import clutchdenLogo from "../assets/cluch.svg";
 
 const walletTypes = [

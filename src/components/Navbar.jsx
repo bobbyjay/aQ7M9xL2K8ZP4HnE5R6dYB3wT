@@ -7,7 +7,7 @@ import HomePageIcon from '../assets/homepage.svg';
 import LadderChallengeIcon from '../assets/LadderChallenge.svg';
 import menubar from '../assets/menubar.svg';
 
-import "../styles/Navbarstyle.css";
+import "../styles/navbarstyle.css";
 import "../styles/button.css";
 
 export default function Navbar() {

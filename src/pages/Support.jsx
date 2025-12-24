@@ -1,7 +1,7 @@
 // src/pages/SupportPage.jsx
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import "../styles/ErrorPopup.css";
+import "../styles/errorPopup.css";
 import "../styles/supportChart.css";
 import addIcon from "../assets/deposit.svg";
 import cancelIcon from "../assets/cancel.svg";

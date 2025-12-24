@@ -1,8 +1,3 @@
-// PROFESSIONAL, VIEWPORT-SAFE, FULL CONTENT VERSION
-// - ALL original write-ups restored and expanded
-// - Extra professional explanations added
-// - UI structure upgraded (clean, readable, responsive)
-// - ZERO horizontal scroll (no vw, no absolute hacks)
 
 import React from "react";
 import backIcon from "../assets/back.svg";

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import clutchdenLogo from "../assets/cluch.svg";
 import "../styles/deposit.css";
 import "../styles/button.css";
-import "../styles/ErrorPopup.css";
+import "../styles/errorPopup.css";
 
 const DepositPage = () => {
   const { deposit, isAuthenticated } = useContext(AuthContext);
