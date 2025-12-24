@@ -113,7 +113,7 @@ const api = {
   withdraw: (data) => API.post("/account/withdraw", data),
 
   // UPLOAD PROFILE
-  updateProfile: (data) => API.get("/upload/profile-image"),
+  updateProfile: (data) => API.post("/upload/profile-image"),
   
   // Upload profile picture (multipart/form-data)
   uploadProfilePicture: (file) => {
