@@ -1,5 +1,5 @@
 import React from 'react'
-import "../styles/Maintenance.css";
+import "../styles/maintenance.css";
 
 function Sports() {
   return (
