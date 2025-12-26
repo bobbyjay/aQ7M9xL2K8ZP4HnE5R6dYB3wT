@@ -85,7 +85,7 @@ export default function Register() {
             <div className="consept2">
               <div className="signincontainer">
                 <div className="signincontainer1">
-                  <h3 className="welc-txt" style={{color: "#3a3a3aff"}}> welecome to Clutchden </h3>
+                  <h3 className="welc-txt" style={{color: "#3a3a3aff"}}> Welcome to Clutchden </h3>
 
                   <form onSubmit={handleSubmit} className="login-form-container">
                     <div className="input-txt">
