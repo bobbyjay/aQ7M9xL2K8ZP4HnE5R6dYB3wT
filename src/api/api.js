@@ -12,8 +12,7 @@ export const setTokenGetter = (fn) => {
 /* ---------------------------------------------------
    🌍 LOAD BASE URL SAFELY
 --------------------------------------------------- */
-const API_BASE =
-  import "https://clutchden-api-server.onrender.com/api";
+const API_BASE = "https://clutchden-api-server.onrender.com/api";
 
 /* ---------------------------------------------------
    🚀 INITIALIZE AXIOS INSTANCE
