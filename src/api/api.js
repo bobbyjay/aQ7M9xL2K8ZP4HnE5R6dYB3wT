@@ -14,7 +14,7 @@ export const setTokenGetter = (fn) => {
 --------------------------------------------------- */
 const API_BASE =
   import.meta.env.VITE_API_URL ||
-  "https://clutchden.onrender.com/api";
+  "https://clutchden-api-server.onrender.com/api";
 
 /* ---------------------------------------------------
    🚀 INITIALIZE AXIOS INSTANCE
