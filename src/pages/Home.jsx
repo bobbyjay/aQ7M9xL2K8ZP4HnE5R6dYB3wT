@@ -37,6 +37,7 @@ function HomeContent() {
   const bannerRef = useRef(null);
   const [navbarHeight, setNavbarHeight] = useState(0);
   const [showAllFeatures, setShowAllFeatures] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   // handler for "View All" button on click shows all the popular sports features 
   const handleViewAllBtn = () => {
@@ -44,16 +45,15 @@ function HomeContent() {
   }
   
   useEffect(() => {
-    if (!navbarRef.current || !bannerRef.current) return;
+    if (!bannerRef.current || !navbarRef.current) return;
+    if (!imageLoaded) return; // wait until image is loaded
 
     // Store navbar height for placeholder when fixed
     setNavbarHeight(navbarRef.current.offsetHeight);
 
-    // Use IntersectionObserver to detect when the top banner scrolls away
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
-        // When banner is NOT intersecting viewport, make navbar fixed
         setIsFixed(!entry.isIntersecting);
       },
       { root: null, threshold: 0 }
@@ -62,14 +62,11 @@ function HomeContent() {
     observer.observe(bannerRef.current);
 
     return () => observer.disconnect();
-  }, []);
+  }, [imageLoaded]); // re-run effect when imageLoaded changes
 
-  // the loading logic so if image not loaded yet it will show a loading animation instead of blank space
-  const [imageLoaded, setImageLoaded] = useState(false);
-  useEffect(() => {
-    const img = new Image();
-    img.onload = () => setImageLoaded(true);
-    img.src = coin1x;
+  useEffect(() => { 
+    const img = new Image(); img.onload = () => setImageLoaded(true); 
+    img.src = coin1x; 
   }, []);
 
   if (!imageLoaded) {
