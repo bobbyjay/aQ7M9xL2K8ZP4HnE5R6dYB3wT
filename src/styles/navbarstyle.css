@@ -72,7 +72,7 @@ a{
 }
 
 .navbaroptions{
-    padding: 20px;
+    padding: 10px;
 }
 
 .navbaroptions1{
@@ -89,7 +89,7 @@ a{
   position: fixed;
   top: 0;
   left: 0;             /* You were missing this */
-  width: 260px;        /* Set a width */
+  width: 220px;        /* Set a width */
   z-index: 9999;       /* REQUIRED so it's visible */
   background-color: #1c1c1c;
   height: 100vh;
@@ -110,14 +110,15 @@ a{
 
 /* Menu icon must be on top so click works */
 .menuleb {
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 999;
 }
 .menu-bar-line{
     border: 1px solid rgba(255, 255, 255, 0.836);
-    font-size: 2.5em;
+    font-size: 2em;
     color: white;
-    padding: 0 0px 5px 13px;
+    padding: 5px;
     border-radius: 10%;
     cursor: pointer;
 }
@@ -137,7 +138,7 @@ a{
 }
 
 .menuscrollcover{
-    padding: 80px 20px;
+    padding: 50px 20px;
 }
 
 .menucover{
@@ -165,8 +166,6 @@ a{
   font-family: sans-serif;
   font-weight: 800;
   text-decoration: none;
-
-  overflow: hidden;
   z-index: 1;
 }
 

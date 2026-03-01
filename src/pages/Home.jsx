@@ -1,6 +1,6 @@
 // ../pages/Home.jsx
 import React from 'react';
-import Navbar from '../components/Navbar';
+import HmNav from '../components/HmNav';
 import { Link } from "react-router-dom";
 import { useMenu, MenuProvider } from "../context/MenuContext";
 import Footersection from '../components/footer';
@@ -17,25 +17,217 @@ import addimage1 from '../assets/images/20251124_160453012.jpg';
 import addimage2 from '../assets/images/20251124_160453256.jpg';
 import addimage3 from '../assets/images/20251124_160430700.png';
 import addimage4 from '../assets/images/20251124_1604530.png';
-
+import addimage5 from '../assets/Coins-ftsy-spts-ptrms-emb.png';
+import coin1x from '../assets/Coins-ftsy-spts-ptrms-emb@1x.png';
+import coin2x from '../assets/Coins-ftsy-spts-ptrms-emb@2x.png';
+import coin3x from '../assets/Coins-ftsy-spts-ptrms-emb@3x.png';
+import goldRush from "../assets/images/gold_rush.png"
+import searchIcon from "../assets/searchIcon.svg"
+import soccerIcon from "../assets/soccerIcon.svg";
+import basketballIcon from "../assets/basketballIcon.svg";
+import tennisIcon from "../assets/tennisIcon.svg";
+import baseballIcon from "../assets/baseballIcon.svg";
+import cs2Icon from "../assets/cs2Icon.svg";
+import fireIcon from "../assets/fire.svg";
+import { useEffect, useState, useRef } from 'react';
 function HomeContent() {
   const { setShowMenuBar } = useMenu();
+  const [isFixed, setIsFixed] = useState(false);
+  const navbarRef = useRef(null);
+  const bannerRef = useRef(null);
+  const [navbarHeight, setNavbarHeight] = useState(0);
+  const [showAllFeatures, setShowAllFeatures] = useState(false);
+
+  // handler for "View All" button on click shows all the popular sports features 
+  const handleViewAllBtn = () => {
+    setShowAllFeatures(true);
+  }
   
+  useEffect(() => {
+    if (!navbarRef.current || !bannerRef.current) return;
+
+    // Store navbar height for placeholder when fixed
+    setNavbarHeight(navbarRef.current.offsetHeight);
+
+    // Use IntersectionObserver to detect when the top banner scrolls away
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        // When banner is NOT intersecting viewport, make navbar fixed
+        setIsFixed(!entry.isIntersecting);
+      },
+      { root: null, threshold: 0 }
+    );
+
+    observer.observe(bannerRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <MenuProvider>
     <div className="homepage-root" onClick={() => setShowMenuBar(false)}>
       {/* NAVBAR */}
       <header className="home-header">
-        <nav className="stagnantnav">
-          <Navbar />
+        <div ref={bannerRef} className='top-adds-banna'>adds stays here</div>
+        <nav ref={navbarRef} className={`stagnantnav ${isFixed ? 'fixed' : ''}`}>
+          <HmNav />
         </nav>
       </header>
+      {/* Placeholder to prevent jump */}
+      {isFixed && <div style={{ height: navbarHeight }} />}
 
       {/* MAIN CONTENT */}
       <main className="home-main">
 
         {/* HERO SECTION */}
         <section className="hero-section">
+          <div className='wlc-banna-div'>
+            <div className='wlc-banna'>
+              <img 
+                src={coin1x} 
+                alt="welcome banner" 
+                className='wlc-banna-img'
+                srcSet={`${coin1x} 1x, ${coin2x} 2x, ${coin3x} 3x`}
+                sizes="(max-width: 768px) 100vw, 800px"
+              />
+            </div>
+            <div className='wlc-banna-content'>
+              <h2 className='wlc-banna-txt'>THE GOLD STANDARD OF FANTASY SPORTS IS HERE</h2>
+              <p className='wlc-banna-desc'>Join millions of users who are already enjoying the best fantasy sports experience in the industry.</p>
+            </div>
+          </div>
+          {/* search for sports */}
+          <div className='search-bar-container-div'>
+            <div className='search-bar-container'>
+              <div>
+                <img 
+                  src={searchIcon} 
+                  alt="search icon" 
+                  className='searchIcon'
+                />
+              </div>
+              <input 
+                type="text" 
+                name="sports-search-engin" 
+                id="sports-search-engin" 
+                aria-placeholder='Search for a sports game'
+                className='search-input-box'
+              />
+            </div>
+          </div>
+
+          {/* types of sports */}
+          <div className='types-of-sports-div'>
+            <div className='scroll-typ-sports'>
+              <div className='sports-ty-soccer'>
+                <div className='sport-icon-div'><img src={soccerIcon} alt="soccer" className='sportIcon' /></div>
+                <div>soccer</div>
+              </div>
+              <div className='sports-ty-nba'>
+                <div className='sport-icon-div'><img src={basketballIcon} alt="basketball" className='sportIcon' /></div>
+                <div>basketball</div>
+              </div>
+              <div className='sports-ty-tennis'>
+                <div className='sport-icon-div'><img src={tennisIcon} alt="tennis" className='sportIcon' /></div>
+                <div>tennis</div>
+              </div>
+              <div className='sports-ty-mlb'>
+                <div className='sport-icon-div'><img src={baseballIcon} alt="baseball" className='sportIcon' /></div>
+                <div>baseball</div>
+              </div>
+              <div className='sports-ty-cs2'>
+                <div className='sport-icon-div'><img src={cs2Icon} alt="cs2" className='sportIcon' /></div>
+                <div>cs2</div>
+              </div>
+            </div>
+          </div>
+
+          {/* line divider */}
+          <div className='line-divider'>
+              <span className='line-divider-line'></span>
+          </div>
+
+          {/* populer sports */}
+          <div className='popular-header-txt-cont'>
+            <div className='fireEmojiIcon-div'>
+              <img src={fireIcon} alt="fire" className='fireEmojiIcon'/>
+            </div>
+            <h2 className='popular-heading-txt'>Explore Our Popular Sports AI features</h2>
+            <button className='view-all-btn' onClick={handleViewAllBtn}>View All</button>
+          </div>
+          <div className='populer-sports-div-containner'>
+            <div className='populer-sports-div'>
+              <div className='populer-sports-grid'>
+                <div className='populer-sport-card'>
+                  <div className='populer-sport-image-div'>
+                    <img src={goldRush} alt="gold rush" className='populer-sport-image' />
+                  </div>
+                  <div className='populer-sport-content'>
+                    <h3 className='populer-sport-title'>Gold Rush: Premier League</h3>
+                    <p className='populer-sport-desc'>Experience the thrill of the Premier League with our Gold Rush feature. Get real-time insights, expert analysis, and exclusive betting opportunities to strike gold on your favorite teams and players.</p>
+                    <button 
+                      className='click-to-try-btn'
+                      onClick={() => (window.location.href = "/bets")}
+                    >Try Gold Rush</button>
+                  </div>
+                </div>
+                {/* Add more popular sport cards as needed */}
+              </div>
+            </div>
+
+            <div className='populer-sports-div'>
+              {/* Add more popular sport cards as needed */}
+              <div className='populer-sport-card'>
+                <div className='populer-sport-image-div'>
+                  <img src={addimage1} alt="gold rush" className='populer-sport-image' />
+                </div>
+                <div className='populer-sport-content'>
+                  <h3 className='populer-sport-title'>AI Pro: AllSport Analysis</h3>
+                  <p className='populer-sport-desc'>Unlock the power of AI Pro for comprehensive analysis across all sports. From soccer to basketball, our AI-driven insights provide you with the edge you need to make informed decisions and elevate your betting strategy.</p>
+                  <button 
+                    className='click-to-try-btn'
+                    onClick={() => (window.location.href = "/bets")}
+                  >Try AI Pro</button>
+                </div>
+              </div>
+            </div>
+
+            <div className='populer-sports-div' style={{display: showAllFeatures ? "block" : "none"}}>
+              {/* Add more popular sport cards as needed */}
+              <div className='populer-sport-card'>
+                <div className='populer-sport-image-div'>   
+                  <img src={addimage2} alt="gold rush" className='populer-sport-image' />
+                </div>
+                <div className='populer-sport-content'>
+                  <h3 className='populer-sport-title'>Safe Bet: Risk-Aware Insights</h3>
+                  <p className='populer-sport-desc'>Introducing Safe Bet, our risk-aware insights feature designed to help you make informed decisions while managing your exposure. With a focus on responsible betting, Safe Bet provides data-driven recommendations that prioritize sustainability and long-term success.</p>
+                  <button
+                    className='click-to-try-btn'
+                    onClick={() => (window.location.href = "/bets")}
+                  >Try Safe Bet</button>
+                </div>
+              </div>
+            </div>
+
+            <div className='populer-sports-div' style={{display: showAllFeatures ? "block" : "none"}}>
+              {/* Add more popular sport cards as needed */}
+              <div className='populer-sport-card'>
+                <div className='populer-sport-image-div'>
+                  <img src={addimage3} alt="gold rush" className='populer-sport-image' />
+                </div>
+                <div className='populer-sport-content'>
+                  <h3 className='populer-sport-title'>ClutchDen Embedded: Real-Time Analytics</h3>
+                  <p className='populer-sport-desc'>Experience the future of sports betting with ClutchDen Embedded. Our real-time analytics feature provides you with instant insights and data-driven recommendations directly within your betting interface, allowing you to make informed decisions at the moment of action.</p>
+                  <button
+                    className='click-to-try-btn'
+                    onClick={() => (window.location.href = "/bets")}
+                  >Try ClutchDen Embedded</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="hero-content">
             <div className="hero-text">
               <h4 className="hero-sub">THE CHALLENGE ARENA FOR REAL ONES</h4>

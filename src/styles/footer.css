@@ -34,7 +34,6 @@
 }
 
 .footermaindiv{
-    overflow: hidden;
     padding: 40px 0;
     font-size:clamp(12px,2vw,16px);
 }
