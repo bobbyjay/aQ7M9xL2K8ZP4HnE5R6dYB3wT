@@ -174,10 +174,19 @@
 
 .view-all-btn {
   padding: 8px 16px;
-  background-color: #007bff; /* Blue background */
-  color: white; /* White text */
-  border: none;
-  border-radius: 20px;
+  border: 2px solid transparent;
+  background: linear-gradient(#081521, #050e17)
+    padding-box, 
+    linear-gradient(
+      180deg,
+      #f6e6b4 0%,
+      #e6c36a 35%,
+      #caa24a 60%,
+      #8a6a2a 100%
+    ) 
+  border-box;
+  color: #e6c36a;
+  border-radius: 20px; 
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;

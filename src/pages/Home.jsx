@@ -160,23 +160,23 @@ function HomeContent() {
             <div className='scroll-typ-sports'>
               <div className='sports-ty-soccer'>
                 <div className='sport-icon-div'><img src={soccerIcon} alt="soccer" className='sportIcon' /></div>
-                <div>soccer</div>
+                <div className='sports-ty-name'>soccer</div>
               </div>
               <div className='sports-ty-nba'>
                 <div className='sport-icon-div'><img src={basketballIcon} alt="basketball" className='sportIcon' /></div>
-                <div>basketball</div>
+                <div className='sports-ty-name'>basketball</div>
               </div>
               <div className='sports-ty-tennis'>
                 <div className='sport-icon-div'><img src={tennisIcon} alt="tennis" className='sportIcon' /></div>
-                <div>tennis</div>
+                <div className='sports-ty-name'>tennis</div>
               </div>
               <div className='sports-ty-mlb'>
                 <div className='sport-icon-div'><img src={baseballIcon} alt="baseball" className='sportIcon' /></div>
-                <div>baseball</div>
+                <div className='sports-ty-name'>baseball</div>
               </div>
               <div className='sports-ty-cs2'>
                 <div className='sport-icon-div'><img src={cs2Icon} alt="cs2" className='sportIcon' /></div>
-                <div>cs2</div>
+                <div className='sports-ty-name'>cs2</div>
               </div>
             </div>
           </div>

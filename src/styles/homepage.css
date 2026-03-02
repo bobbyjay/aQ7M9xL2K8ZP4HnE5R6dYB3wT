@@ -101,13 +101,31 @@
     --color-neutral-900: oklch(20.5% 0 0);
     --color-white-50: #ffffff ;
     --color-white-100: #d6cece;
+    --color-secondary-text: #b8c2cc;
 }
 
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    background: linear-gradient(
+    180deg, 
+    #0b1e33 0%, 
+    #0a1a2b 40%, 
+    #081521 70%, 
+    #050e17 100%
+  );
+}
+
+.home-main{
+  background: linear-gradient(
+    180deg, 
+    #0b1e33 0%, 
+    #0a1a2b 40%, 
+    #081521 70%, 
+    #050e17 100%
+  );
+  color: var(--text-color);
 }
 
 .homepage-root{
@@ -138,8 +156,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fbfbfb;
-  color: #222;
+  background: linear-gradient(
+    45deg,
+    #333,
+    #6c757d
+  );
+  color: #ffffff;
   font-size: 13px;
   box-shadow: 0 1px 0 rgba(0,0,0,0.03);
 }
@@ -167,15 +189,37 @@ body {
   display: grid;
   grid-template-columns: auto auto;
   color: #555;
-  border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px;
-  border: 1px solid rgb(65, 64, 64);
+}
+
+.wlc-banna-txt{
+  background: linear-gradient(
+    180deg,
+    #f6e6b4 0%,
+    #e6c36a 35%,
+    #caa24a 60%,
+    #8a6a2a 100%
+  );
+  /* Standard property */
+  background-clip: text;
+
+  /* Vendor prefix for Chrome / Safari */
+  -webkit-background-clip: text;
+
+  /* Make text transparent so gradient shows */
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font: clamp(1.5em, 3vw, 3em) 'Bebas Neue', cursive;
 }
 
 .wlc-banna-img{
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+.wlc-banna-desc{
+  font: clamp(1em, 2vw, 1.5em) 'Outfit', sans-serif;
+  color: var(--color-secondary-text);
 }
 
 .searchIcon{
@@ -188,13 +232,34 @@ body {
 .types-of-sports-div{
   padding: 10px;
 }
+.sports-ty-name{
+  text-shadow: 0 0 12px rgba(224,185,92,0.55);
+  background: linear-gradient(
+    180deg,
+    #f6e6b4 0%,
+    #e6c36a 35%,
+    #caa24a 60%,
+    #8a6a2a 100%
+  );
+  /* Standard property */
+  background-clip: text;
+
+  /* Vendor prefix for Chrome / Safari */
+  -webkit-background-clip: text;
+
+  /* Make text transparent so gradient shows */
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
 
 .search-bar-container{
   display: grid;
   grid-template-columns: auto 1fr;
-  background-color: var(--secondary-color);
+  background: rgba(255,255,255,0.08);
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(12px);
 }
 
 .search-input-box{
@@ -318,6 +383,7 @@ body {
 .popular-heading-txt{
   font: clamp(1em, 2vw, 2em) sans-serif;
   padding-top: 5px;
+  color: var(--color-yellow-500);
 }
 
 .populer-sports-div-containner{
@@ -335,7 +401,12 @@ body {
   display: block;
   width: 100%;
   height: 1px;
-  background-color: var(--color-neutral-300);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(224, 185, 92, 0.4),
+    transparent
+  );
 }
 
 .wlc-banna-img{
