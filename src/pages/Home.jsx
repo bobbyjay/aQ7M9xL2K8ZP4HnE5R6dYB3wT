@@ -21,8 +21,8 @@ import addimage5 from '../assets/Coins-ftsy-spts-ptrms-emb.png';
 import coin1x from '../assets/Coins-ftsy-spts-ptrms-emb@1x.png';
 import coin2x from '../assets/Coins-ftsy-spts-ptrms-emb@2x.png';
 import coin3x from '../assets/Coins-ftsy-spts-ptrms-emb@3x.png';
-import goldRush from "../assets/images/gold_rush.png"
-import searchIcon from "../assets/searchIcon.svg"
+import goldRush from "../assets/images/soccer_diagram.png";
+import searchIcon from "../assets/searchIcon.svg";
 import soccerIcon from "../assets/soccerIcon.svg";
 import basketballIcon from "../assets/basketballIcon.svg";
 import tennisIcon from "../assets/tennisIcon.svg";
@@ -202,7 +202,7 @@ function HomeContent() {
                     <img src={goldRush} alt="gold rush" className='populer-sport-image' />
                   </div>
                   <div className='populer-sport-content'>
-                    <h3 className='populer-sport-title'>Gold Rush: Premier League</h3>
+                    <h3 className='populer-sport-title'>Premier League Gold Rush</h3>
                     <p className='populer-sport-desc'>Experience the thrill of the Premier League with our Gold Rush feature. Get real-time insights, expert analysis, and exclusive betting opportunities to strike gold on your favorite teams and players.</p>
                     <button 
                       className='click-to-try-btn'
