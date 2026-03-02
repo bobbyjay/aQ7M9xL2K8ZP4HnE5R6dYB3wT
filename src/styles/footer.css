@@ -30,7 +30,8 @@
     --color-brand-600: #00c042;
     --color-brand-700: #009636;
     --color-brand-800: #228b22;
-    --color-brand-900: #07602a
+    --color-brand-900: #07602a;
+    --color-yellow-500: #f0b100;
 }
 
 .footermaindiv{
@@ -40,4 +41,39 @@
 
 .home-footer{
     max-width: 100vw;
+}
+
+.bet-footer-social-icon{
+    width: 30px;
+    height: 30px;
+}
+
+.bet-footer-socials-containner{
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.bet-footer-txt-1{
+    background: linear-gradient(
+      180deg,
+      #f5df9c 0%,
+      #e4bd5c 35%,
+      #cea03d 60%,
+      #886622 100%
+    );
+    /* Standard property */
+    background-clip: text;
+
+    /* Vendor prefix for Chrome / Safari */
+    -webkit-background-clip: text;
+
+    /* Make text transparent so gradient shows */
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    font: clamp(1.5em, 3vw, 3em) 'Bebas Neue', sans-serif;
+    text-align: center;
+    padding: 0 20px;
+    font: clamp(12px,2vw,1.2em) sans-serif;
 }

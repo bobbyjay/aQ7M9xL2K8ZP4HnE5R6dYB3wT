@@ -196,3 +196,31 @@
 .view-all-btn:hover {
   background-color: #0056b3; /* Darker blue on hover */
 }
+
+.click-to-try-btn {
+  padding: 15px 20px;
+  border: 2px solid transparent;
+  background: linear-gradient(#081521, #050e17)
+    padding-box, 
+    linear-gradient(
+      180deg,#e2e1dee0 2%, 
+      #e0b85ce0 50%, 
+      #cfa04ae1 95%, 
+      #e2e1dedc 2%)
+    border-box;
+  color: #e0b85ce0;
+  border-radius: 14px;
+  width: 100%;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.click-to-try-btn:hover {
+  border: 2px solid transparent;
+  background: linear-gradient(#081521, #050e17)
+    padding-box, 
+    linear-gradient(180deg,#e2e1dee0 2%, #e0b85ce0 50%, #cfa04ae1 95%, #e2e1dedc 2%) border-box;
+  color: #e0b85ce0;
+}

@@ -560,61 +560,6 @@ function HomeContent() {
           </div>
         </section>
 
-        <section className='trust-section'>
-          <div className='ambient-layer'>
-            <div className='circle-roam'><div className='circle-breathe'></div></div>
-          </div>
-          <div style={{zIndex: "1"}}>
-            <img src={clutchdenem} alt="logo" style={{width: "200px"}}/>
-          </div>
-          <div style={{zIndex: "1"}}>
-            <p className='ads-txts'>
-              Every customer interaction is handled with transparency, respect, and
-              accountability. Our support systems are built to ensure clarity and
-              confidence at every stage of your journey.
-            </p>
-          </div>
-          <div className='social-media-icon-grid-box' style={{zIndex: "1"}}>
-            <div className='social-media-icon-div' style={{marginTop: "20px"}}>
-              <Link to="https://www.instagram.com/clutchden.online?igsh=c2tvbHljOXdsd2g3" target="_blank" rel="noopener noreferrer" style={{margin: "0", padding: "0"}}>
-                <img src={instagramLogo} alt="instagram" className='social-media-icon' style={{maxWidth: "16px", minWidth: "16px"}}/>
-              </Link>
-              <Link to="https://www.facebook.com/profile.php?id=100089899208648" target="_blank" rel="noopener noreferrer" style={{margin: "0", padding: "0"}}>
-                <img src={facebookLogo} alt="facebook" className='social-media-icon' style={{maxWidth: "16px", minWidth: "16px"}}/>
-              </Link>
-              <Link to="https://twitter.com/clutchden" target="_blank" rel="noopener noreferrer" style={{margin: "0", padding: "0"}}>
-                <img src={twitterLogo} alt="twitter" className='social-media-icon' style={{maxWidth: "16px", minWidth: "16px"}}/>
-              </Link>
-            </div>
-          </div>
-          <div className='links-section-grid-box' style={{zIndex: "1"}}>
-            <div className='links-section'>
-              <div className='links-div-containner-1'><span className='stroke-line'></span><h3 className='link-head-txt'>Quick Links</h3></div>
-              <div className='links-div-containner' style={{display: "flex"}}>
-                <div style={{minHeight : "25px", minWidth: "25px", maxWidth: "25px", maxHeight: "25px"}} >
-                  <span className='forword-arrow'></span>
-                </div> 
-                <Link to="/about" style={{margin: "0", padding: "0"}} ><p className='quick-links-txts' >About Us</p></Link>
-              </div>
-              <div className='links-div-containner'>
-                <div style={{minHeight : "25px", minWidth: "25px", maxWidth: "25px", maxHeight: "25px"}} >
-                  <span className='forword-arrow'></span>
-                </div>
-                <Link to="/terms-of-service" style={{margin: "0", padding: "0"}} >
-                  <p className='quick-links-txts' >Services</p>
-                </Link>
-              </div>
-              <div className='links-div-containner'>
-                <div style={{minHeight : "25px", minWidth: "25px", maxWidth: "25px", maxHeight: "25px"}} >
-                  <span className='forword-arrow'></span>
-                </div>
-                <Link to="/support-page" style={{margin: "0", padding: "0"}} >
-                  <p className='quick-links-txt' >Contact</p>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
         <section className='line-role'><span className='the-line'></span></section>
       </main>
 
