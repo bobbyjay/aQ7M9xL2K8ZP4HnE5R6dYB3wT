@@ -208,7 +208,7 @@ body {
   /* Make text transparent so gradient shows */
   color: transparent;
   -webkit-text-fill-color: transparent;
-  font: clamp(1.5em, 3vw, 3em) 'Bebas Neue', cursive;
+  font: clamp(1.5em, 3vw, 3em) 'Bebas Neue', sans-serif;
 }
 
 .wlc-banna-img{
