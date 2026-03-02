@@ -342,9 +342,19 @@ body {
 
 /* populer */
 .populer-sports-div{
-  border: 2px solid var(--color-green-800);
-  border-radius: 10px;
-  padding: 10px;
+  border: 2px solid transparent;
+  background: linear-gradient(#081521, #050e17)
+    padding-box, 
+    linear-gradient(
+      180deg,
+      #f6e6b4 0%,
+      #e6c36a 35%,
+      #caa24a 60%,
+      #8a6a2a 100%
+    ) 
+  border-box;
+  border-radius: 14px;
+  overflow: hidden;
 }
 .populer-sports-grid{
   display: grid;
@@ -359,6 +369,46 @@ body {
 }
 .populer-sport-image-div{
   width: 100%;
+}
+.populer-sport-image-div img{
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255,255,255,.95), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(232,223,210,.55), transparent 45%),
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #f6f1e8 25%,
+      #e9e3d8 55%,
+      #fdfcf9 100%
+    ),
+    linear-gradient(
+      120deg,
+      rgba(212,169,74,.12),
+      transparent 40%
+    );
+}
+.populer-sport-image-div img{
+  position: relative;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.08),
+    inset 0 1px 0 rgba(255,255,255,.8),
+    inset 0 -8px 25px rgba(212,169,74,.08);
+}
+.populer-sport-image-div img{
+  background-size: 200% 200%;
+  animation: pearlFlow 12s ease infinite;
+}
+
+@keyframes pearlFlow{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+@keyframes pearlMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
 .populer-sport-image{
   width: 100%;
