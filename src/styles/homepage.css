@@ -126,6 +126,7 @@ body {
     #050e17 100%
   );
   color: var(--text-color);
+  padding-top: 10px;
 }
 
 .homepage-root{
@@ -403,7 +404,7 @@ body {
   padding: 10px;
 }
 .popular-heading-txt{
-  font: clamp(1em, 2vw, 2em) sans-serif;
+  font: clamp(0.8em, 2vw, 2em) sans-serif;
   padding-top: 5px;
   color: var(--color-yellow-500);
 }
