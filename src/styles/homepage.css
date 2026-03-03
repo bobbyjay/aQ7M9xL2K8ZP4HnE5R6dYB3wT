@@ -272,10 +272,64 @@ body {
 .scroll-typ-sports{
   display: grid;
   grid-template-columns: auto auto auto auto auto;
-  gap: 20px;
+  gap: 10px;
+  position: relative;
   overflow-x: auto;
   text-align: center;
+  padding-bottom: 5px;
 }
+
+/* to give the scroll box side shadow shade */
+/* Left shadow */
+.types-of-sports-div::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 100%;
+  pointer-events: none;
+
+  background: linear-gradient(
+    to right,
+    rgba(0,0,0,0.25),
+    rgba(0,0,0,0)
+  );
+}
+
+/* Right shadow */
+.types-of-sports-div::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 100%;
+  pointer-events: none;
+
+  background: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.274),
+    rgba(0, 0, 0, 0.014)
+  );
+}
+
+.types-of-sports-div{
+  position: relative;
+}
+
+/* the scroll design */
+.scroll-typ-sports::-webkit-scrollbar {
+  height: 8px;
+}
+.scroll-typ-sports::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-typ-sports::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.18);
+  border-radius: 4px;
+}
+
 
 .sportIcon{
   width: 32px;
@@ -317,6 +371,21 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* to make text to go to the buttom */
+.sports-ty-name{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 5px;
+}
+
+.sports-ty-cs2, .sports-ty-mlb, .sports-ty-tennis, .sports-ty-nba, .sports-ty-soccer{
+  min-width: 80px;   
+  background-color: #55555570; 
+  padding: 10px 0;
+  border-radius: 10px;
 }
 
 /* =================
