@@ -623,7 +623,7 @@ function HomeContent() {
             <div className='platform-content-div'>
               <h3 className='footer-heading'>AI HUB</h3>
               <ul className='footer-list'>
-                <li><Link to="/bets" className='footer-link-txt'>Predictive Analytcs</Link></li>
+                <li><Link to="/bets" className='footer-link-txt'>Predictive Analytics</Link></li>
                 <li><Link to="/profile" className='footer-link-txt'>Trend Tracking</Link></li>
                 <li><Link to="/contact" className='footer-link-txt'>Injury Probability</Link></li>
                 <li><Link to="/blog" className='footer-link-txt'>The Clutchden Blog</Link></li>

@@ -12,7 +12,7 @@ function footer() {
         <div className="bet-footer-1">
             <p className="bet-footer-txt-1">
                 © 2026 Clutchden Analytics, LLC. All rights reserved. 
-                <br /> Problem gambling follow us on social media.
+                <br /> Concerned about your problem gambling? Please play responsibly. Follow us on social media.
             </p>
             <div className="bet-footer-socials-containner">
                 <a href="https://www.facebook.com/clutchden" target="_blank" rel="noopener noreferrer">
@@ -30,7 +30,7 @@ function footer() {
         <div style={{ display: "flex", justifyContent: "center"}}>
             <div className="bet-footer-tx-002-div">18+</div>
             <div className="bet-footer-tx-003-div">
-                <Link to="/terms-of-service" className="bet-footer-tx-003"> Learn more about our Terms of Service </Link>
+                <Link to="/terms-of-service" className="bet-footer-tx-003" style={{color: "#ffffff"}}> Learn more about our Terms of Service </Link>
             </div>
         </div>
     </div>
