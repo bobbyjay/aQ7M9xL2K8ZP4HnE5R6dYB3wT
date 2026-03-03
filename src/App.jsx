@@ -1,6 +1,8 @@
 // src/App.jsx
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { Navigate, useLocation } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { useAuth } from "./context/AuthContext";
 import Login from './pages/Login';
 import Register from './pages/Register';
 import VerifyEmailPage from './pages/VerifyEmailPage';
@@ -15,13 +17,33 @@ import CustomerSupportPage from './pages/customerSupport';
 import TermsOfService from './pages/termsOfService';
 import Sports from './pages/sports';
 import About from './pages/About';
+import NotFound from './pages/NotFound';
+
+// ---------------------------
+// Root redirect (safe)
+// ---------------------------
+function RootRedirect() {
+  const { loading, isAuthenticated } = useAuth();
+  const location = useLocation();
+
+  if (loading) return null;
+
+  const target = isAuthenticated ? "/bets" : "/home";
+
+  // If already on the correct page, render nothing
+  if (location.pathname === target) {
+    return null;
+  }
+
+  return <Navigate to={target} replace />;
+}
 
 export default function App() {
   return (
     <BrowserRouter>            
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />
@@ -81,6 +103,12 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* Root redirect */}
+          <Route path="/" element={<RootRedirect />} />
+
+          {/* Fallback */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

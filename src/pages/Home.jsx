@@ -6,18 +6,12 @@ import { useMenu, MenuProvider } from "../context/MenuContext";
 import Footersection from '../components/footer';
 import aiIcon from '../assets/ai_Icon.svg';
 import safeIcon from '../assets/safe_icon.svg';
-import facebookLogo from '../assets/facebookLogo.svg';
-import instagramLogo from '../assets/instagram.svg';
-import twitterLogo from '../assets/twitter.svg';
 import '../styles/homepage.css';
 import '../styles/button.css';
 import '../styles/font_stylesheet.css';
-import clutchdenem from "../assets/clutchdenEmbedded.svg";
 import addimage1 from '../assets/images/20251124_160453012.jpg';
 import addimage2 from '../assets/images/20251124_160453256.jpg';
 import addimage3 from '../assets/images/20251124_160430700.png';
-import addimage4 from '../assets/images/20251124_1604530.png';
-import addimage5 from '../assets/Coins-ftsy-spts-ptrms-emb.png';
 import coin1x from '../assets/Coins-ftsy-spts-ptrms-emb@1x.png';
 import coin2x from '../assets/Coins-ftsy-spts-ptrms-emb@2x.png';
 import coin3x from '../assets/Coins-ftsy-spts-ptrms-emb@3x.png';
@@ -29,6 +23,13 @@ import tennisIcon from "../assets/tennisIcon.svg";
 import baseballIcon from "../assets/baseballIcon.svg";
 import cs2Icon from "../assets/cs2Icon.svg";
 import fireIcon from "../assets/fire.svg";
+
+// official league partners img
+import nbaImg from '../assets/NBA_Logo.svg';
+import mlbImg from '../assets/MLB_Logo.svg';
+import nflImg from '../assets/NFL_Logo.svg';
+import premierLeagueImg from '../assets/Premier_League.svg';
+
 import { useEffect, useState, useRef } from 'react';
 function HomeContent() {
   const { setShowMenuBar } = useMenu();
@@ -183,7 +184,7 @@ function HomeContent() {
 
           {/* line divider */}
           <div className='line-divider'>
-              <span className='line-divider-line'></span>
+            <span className='line-divider-line' />
           </div>
 
           {/* populer sports */}
@@ -565,6 +566,90 @@ function HomeContent() {
 
       {/* FOOTER */}
       <footer className="home-footer">
+        <div className='official-league-partners-container'>
+
+          <div>
+            <h2 className='official-league-partners-heading-txt'>Official League Partners</h2>
+          </div>
+      
+          <div className='official-league-partners-div-1'>
+
+            <div className='official-league-partners-div-1-1'>
+              <img 
+                src={premierLeagueImg} 
+                alt="premier league" 
+                className='official-league-partners-img'
+              />
+            </div>
+            <div className='official-league-partners-div-1-1'>
+              <img 
+                src={nbaImg} 
+                alt="nba" 
+                className='official-league-partners-img'
+              />
+            </div>
+            <div className='official-league-partners-div-1-1'>
+              <img 
+                src={nflImg} 
+                alt="nfl" 
+                className='official-league-partners-img'
+              />
+            </div>
+            <div className='official-league-partners-div-1-1'>
+              <img 
+                src={mlbImg} 
+                alt="mlb" 
+                className='official-league-partners-img'
+              />
+            </div>
+
+          </div>
+          <div>
+            <span className='official-league-partners-divider-line' />
+          </div>
+        </div>
+        <div>
+          <div className='footer-content-div'>
+
+            <div className='platform-content-div'>
+              <h3 className='footer-heading'>PLATFORM</h3>
+              <ul className='footer-list'>
+                <li><Link to="/market-insights" className='footer-link-txt'>Market Insights</Link></li>
+                <li><Link to="/OddS" className='footer-link-txt'>Odds</Link></li>
+                <li><Link to="/contact" className='footer-link-txt'>DFS</Link></li>
+              </ul>
+            </div>
+
+            <div className='platform-content-div'>
+              <h3 className='footer-heading'>AI HUB</h3>
+              <ul className='footer-list'>
+                <li><Link to="/bets" className='footer-link-txt'>Predictive Analytcs</Link></li>
+                <li><Link to="/profile" className='footer-link-txt'>Trend Tracking</Link></li>
+                <li><Link to="/contact" className='footer-link-txt'>Injury Probability</Link></li>
+                <li><Link to="/blog" className='footer-link-txt'>The Clutchden Blog</Link></li>
+              </ul>
+            </div>
+
+            <div className='platform-content-div'>
+              <h3 className='footer-heading'>LEGAL & COMPLIANCE</h3>
+              <ul className='footer-list'>
+                <li><Link to="/terms-of-service" className='footer-link-txt'>Terms of Service</Link></li>
+                <li><Link to="/privacy-policy" className='footer-link-txt'>Privacy Policy</Link></li>
+                <li><Link to="/careers" className='footer-link-txt'>Careers</Link></li>
+              </ul>
+            </div>
+
+            <div className='platform-content-div'>
+              <h3 className='footer-heading'>CONNECT</h3>
+              <ul className='footer-list'>
+                <li><Link to="/support" className='footer-link-txt'>Support</Link></li>
+                <li><Link to="/affiliate-program" className='footer-link-txt'>Affiliate Program</Link></li>
+                <li><Link to="/social-media" className='footer-link-txt'>Social Media</Link></li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
         <Footersection />
       </footer>
     </div>

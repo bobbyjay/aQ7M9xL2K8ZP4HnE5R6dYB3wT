@@ -43,6 +43,19 @@
     max-width: 100vw;
 }
 
+.home-footer::before{
+    content: "";
+    display: block;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(224, 185, 92, 0.4),
+        transparent
+    );
+}
+
 .bet-footer-social-icon{
     width: 30px;
     height: 30px;
@@ -76,4 +89,106 @@
     text-align: center;
     padding: 0 20px;
     font: clamp(12px,2vw,1.2em) sans-serif;
+}
+
+.footer-content-div{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.footer-heading{
+    font: clamp(1.2em, 2vw, 1.8em) 'Bebas Neue', sans-serif;
+    margin-bottom: 10px;
+    background: linear-gradient(
+    180deg,
+    #f6e6b4 0%,
+    #e6c36a 35%,
+    #caa24a 60%,
+    #8a6a2a 100%
+  );
+  /* Standard property */
+  background-clip: text;
+
+  /* Vendor prefix for Chrome / Safari */
+  -webkit-background-clip: text;
+
+  /* Make text transparent so gradient shows */
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.footer-list{
+    list-style-type: none;
+    display: grid;
+    gap: 8px;
+}
+
+.footer-link-txt{
+    margin: 0;
+    padding: 0;
+    color: var(--color-secondary-text);
+    font-family: sans-serif;
+    font-weight: 500;
+}
+
+.platform-content-div{
+    display: grid;
+    gap: 10px;
+    padding: 0 20%;
+}
+
+.official-league-partners-div-1{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.official-league-partners-container{
+    background: linear-gradient(
+        90deg,
+        #061c29,
+        #171f11ea,
+        #061c29
+    );
+}
+
+.official-league-partners-heading-txt{
+    text-align: center;
+    background: linear-gradient(
+      180deg,
+      #f5df9c 0%,
+      #e4bd5c 35%,
+      #cea03d 60%,
+      #886622 100%
+    );
+    /* Standard property */
+    background-clip: text;
+
+    /* Vendor prefix for Chrome / Safari */
+    -webkit-background-clip: text;
+
+    /* Make text transparent so gradient shows */
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+.official-league-partners-img{
+    width: 50px;
+    height: auto;
+}
+
+.official-league-partners-divider-line{
+    display: block;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(224, 185, 92, 0.4),
+        transparent
+    );
+    margin-bottom: 20px;
 }
