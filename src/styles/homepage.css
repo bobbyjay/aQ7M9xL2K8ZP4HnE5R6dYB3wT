@@ -575,3 +575,146 @@ body {
 .wlc-banna-img{
   object-fit: cover;
 }
+
+/* --------- LATEST NEWS Layout --------- */
+.latest-news{
+  margin-top: 40px;
+}
+
+.news-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.news-header h2{
+  font-size: 24px;
+  color: #fff;
+}
+
+.news-grid{
+  display:grid;
+  grid-template-columns: 2fr 1fr;
+  gap:20px;
+}
+
+/*------------ Featured Story -----------*/
+.featured-news{
+  position:relative;
+  border-radius:14px;
+  overflow:hidden;
+}
+
+.featured-news img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.featured-overlay{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+
+  padding:20px;
+
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.8),
+    rgba(0,0,0,0)
+  );
+}
+
+.featured-overlay h3{
+  color:white;
+  font-size:20px;
+}
+
+/* --------- News List --------- */
+.news-list{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.news-card{
+  display:flex;
+  gap:12px;
+  background: rgba(255,255,255,0.03);
+  border-radius:10px;
+  padding:10px;
+  transition: background 0.2s ease;
+}
+
+.news-card:hover{
+  background: rgba(255,255,255,0.06);
+}
+
+.news-card img{
+  width:90px;
+  height:70px;
+  object-fit:cover;
+  border-radius:6px;
+}
+
+.news-content h4{
+  font-size:14px;
+  color:#fff;
+}
+
+.news-content p{
+  font-size:12px;
+  color:#aaa;
+}
+
+/*------------ Skeleton Layout -----------*/
+.skeleton-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:10px;
+}
+
+.skeleton{
+  background: linear-gradient(
+    90deg,
+    #1a1a1a,
+    #2a2a2a,
+    #1a1a1a
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite linear;
+  border-radius:12px;
+}
+
+.featured-news.skeleton{
+  height:320px;
+}
+
+.news-card.skeleton{
+  height:30px;
+  margin-bottom:12px;
+}
+
+@keyframes shimmer{
+  0%{
+    background-position:-200% 0;
+  }
+  100%{
+    background-position:200% 0;
+  }
+}
+
+/* --------- Mobile Responsive --------- */
+@media (max-width: 900px){
+
+  .news-grid{
+    grid-template-columns: 1fr;
+  }
+
+  .news-list{
+    flex-direction:column;
+  }
+
+}

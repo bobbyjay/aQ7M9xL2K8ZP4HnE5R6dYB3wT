@@ -160,6 +160,9 @@ const api = {
     headers: { "Content-Type": "multipart/form-data" },
   }),
 
+  // LATEST NEWS
+  getLatestNews: () => API.get("/news/latest"),
+
 
 };
 

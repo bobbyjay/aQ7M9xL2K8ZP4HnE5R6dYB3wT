@@ -595,8 +595,24 @@ const replyToTicket = async (ticketId, formData) => {
     }
   };
 
+  /* -----------------------------------------
+    🟡 LATEST NEWS API
+  ----------------------------------------- */
+  const getLatestNews = async () => {
+    try {
+      const res = await api.getLatestNews();
 
+      if (!res.data?.success) {
+        return { success: false, message: res.data?.message || "Failed to fetch latest news", news: [] };
+      }
 
+      const news = res.data.data || [];
+      return { success: true, message: res.data.message, news };
+    } catch (err) {
+      console.error("Latest news fetch failed:", err);
+      return { success: false, message: err.message, news: [] };
+    }
+  };
 
   return (
     <AuthContext.Provider
@@ -626,6 +642,7 @@ const replyToTicket = async (ticketId, formData) => {
           replyToTicket,
           updateProfile,
           fetchReceipt, // ⬅️ added
+          getLatestNews, // ⬅️ get latest news function into context
 
           isAuthenticated: !!user,
         }}

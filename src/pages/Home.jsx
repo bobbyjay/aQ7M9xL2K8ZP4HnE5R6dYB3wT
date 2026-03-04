@@ -3,9 +3,8 @@ import React from 'react';
 import HmNav from '../components/HmNav';
 import { Link } from "react-router-dom";
 import { useMenu, MenuProvider } from "../context/MenuContext";
+import { useAuth } from "../context/AuthContext";
 import Footersection from '../components/footer';
-import aiIcon from '../assets/ai_Icon.svg';
-import safeIcon from '../assets/safe_icon.svg';
 import '../styles/homepage.css';
 import '../styles/button.css';
 import '../styles/font_stylesheet.css';
@@ -32,6 +31,9 @@ import premierLeagueImg from '../assets/Premier_League.svg';
 
 import { useEffect, useState, useRef, useMemo} from 'react';
 function HomeContent() {
+  const { 
+    getLatestNews 
+  } = useAuth();
   const { setShowMenuBar } = useMenu();
   const [isFixed, setIsFixed] = useState(false);
   const navbarRef = useRef(null);
@@ -46,6 +48,11 @@ function HomeContent() {
   const [activeIndex, setActiveIndex] = useState(-1);
 
   const searchRef = useRef(null);
+
+  /*----------- LATEST NEWS ------------*/
+  const [latestNews, setLatestNews] = useState([]);
+  const [newsLoading, setNewsLoading] = useState(true);
+  const [newsError, setNewsError] = useState(null);
 
   const sports = [
     "Football",
@@ -165,6 +172,57 @@ function HomeContent() {
       setActiveIndex(-1);
     }
   }, [search]);
+
+  /* ---------------- FETCH LATEST NEWS ---------------- */
+  useEffect(() => {
+    const fetchLatestNews = async () => {
+      try {
+        setNewsLoading(true);
+
+        const response = await getLatestNews();
+
+        setLatestNews(response.data);
+        setNewsError(null);
+
+        if (Array.isArray(data)) {
+          setLatestNews(data);
+        } else {
+          setLatestNews([]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch latest news:", error);
+        setNewsError(error.message || "Failed to fetch latest news.");
+        setLatestNews([]);
+      } finally {
+        setNewsLoading(false);
+      }
+    };
+
+      fetchLatestNews();
+    }, [getLatestNews]
+  );
+
+  const fetchedNews = useRef(false);
+
+  /* ---------------- Prevent double API calls ---------------- */
+  useEffect(() => {
+    if (fetchedNews.current) return;
+    fetchedNews.current = true;
+
+    const fetchLatestNews = async () => {
+      try {
+        setNewsLoading(true);
+        const data = await getLatestNews();
+        setLatestNews(data || []);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setNewsLoading(false);
+      }
+    };
+
+    fetchLatestNews();
+  }, []);
 
   if (!imageLoaded) {
     return (
@@ -413,213 +471,66 @@ function HomeContent() {
           </div>
         </section>
 
-        {/* PERFORMANCE METRICS */}
-        <section className="metrics-section">
-          <h2 className="section-title">Platform Performance Overview</h2>
-          <p className='ads-txts'>
-            Our results are driven by data, discipline, and transparency not hype.
-          </p>
+        {/* NEWS SECTION */}
+        <section className="latest-news">
 
-          <div className="metrics-grid">
-            <div className="metric-card">
-              <h3 className="metric-card-No">72%</h3>
-              <p className="metric-card-txt">Historical Win Rate</p>
-            </div>
-            <div className="metric-card">
-              <h3 className="metric-card-No">+38%</h3>
-              <p className="metric-card-txt">Average ROI per Cycle</p>
-            </div>
-            <div className="metric-card">
-              <h3 className="metric-card-No">1,200+</h3>
-              <p className="metric-card-txt">Successful AllStake Cycles</p>
-            </div>
-            <div className="metric-card">
-              <h3 className="metric-card-No">24/7</h3>
-              <p className="metric-card-txt">Market Monitoring</p>
-            </div>
+          <div className="news-header">
+            <h2>Latest Sports News</h2>
           </div>
-        </section>
 
-        {/* ADS / PROMOTIONS */}
-        <section>
-          <div></div>
-          <div><h2 className='heading-txt'>How Can We Help You Today?</h2></div>
-        </section>
-        <section className="ads-section">
-          <div className='ads-promo'>
-            <div className='ads-content-div'>
-              <h3>Start Building Your Financial Strength</h3>
-              <p className='ads-txts'>For a limited time, get a $50 when you open any new account, and what helps you reach your financial goals.</p>
-              <ul className='ads-txts'>
-                <li className='list-contents-for-ads'>
-                  <div className='style-checkmark'><span className='check-ani'></span></div>
-                  <div className='list-contents-for-ads-txt'>No minimum balance required</div>
-                </li>
-                <li className='list-contents-for-ads'>
-                  <div className='style-checkmark'><span className='check-ani'></span></div>
-                  <div className='list-contents-for-ads-txt'>Free online and mobile banking services</div>
-                </li>
-                <li className='list-contents-for-ads'>
-                  <div className='style-checkmark'><span className='check-ani'></span></div>
-                  <div className='list-contents-for-ads-txt'>24/7 customer support</div>
-                </li>
-              </ul>
-              <button 
-                className='glass-btn'
-                onClick={() => (window.location.href = "/Profile")}
-              >🡢 Open Account Now
-              </button>
+          {/* Loading State */}
+          {newsLoading && (
+            <div className="news-grid skeleton-grid">
+
+              <div className="featured-news skeleton"></div>
+
+              <div className="news-list">
+                <div className="news-card skeleton"></div>
+                <div className="news-card skeleton"></div>
+                <div className="news-card skeleton"></div>
+                <div className="news-card skeleton"></div>
+              </div>
+
             </div>
-          </div>
-          <div className='ads-promo'>
-            <div className='ads2-content-div'>
-              <div>
-                <div className='ai-icon-div'>
-                  <img src={aiIcon} alt="ai" style={{width: "32px"}}/>
+          )}
+
+          {/* Error */}
+          {!newsLoading && newsError && (
+            <p className="error">{newsError}</p>
+          )}
+
+          {/* No Data */}
+          {!newsLoading && !newsError && latestNews.length === 0 && (
+            <p>No news available.</p>
+          )}
+
+          {/* Actual Content */}
+          {!newsLoading && latestNews.length > 0 && (
+            <div className="news-grid">
+
+              <div className="featured-news">
+                <img src={latestNews[0].image} alt={latestNews[0].title} />
+                <div className="featured-overlay">
+                  <h3>{latestNews[0].title}</h3>
+                  <p>{latestNews[0].summary}</p>
                 </div>
               </div>
-              <h3 className='ad-tittle-name'>Start Winning <span className='doller-ani'>$</span> With Our AI Powered Analysts</h3>
-              <div>
-                <p className='ads-txts'>Our AI Powered analysts evaluate fixtures using multi layer models that consider form trends, matchup data, and market movement. Only selections that pass strict confidence thresholds reach the AllStake stage.</p>
+
+              <div className="news-list">
+                {latestNews.slice(1, 5).map((news) => (
+                  <div key={news.id} className="news-card">
+                    <img src={news.image} alt={news.title} />
+                    <div className="news-content">
+                      <h4>{news.title}</h4>
+                      <p>{news.summary}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <button 
-                className='glass-btn'
-                onClick={() => (window.location.href = "/bets")}
-              >🡢 Try Out AI Pro</button>
+
             </div>
-          </div>
-          <div className='ads-promo'>
-            <div className='ads3-content-div'>
-              <div>
-                <div className='ai-icon-div'>
-                  <img src={safeIcon} alt="safe" style={{width: "32px"}}/>
-                </div>
-              </div>
-              <h3>Risk-Aware Participation <span className='star'>★</span></h3>
-              <p className='ads-txts'>
-                Our systems are designed to encourage responsible participation.
-                We emphasize bankroll awareness, controlled exposure, and long term
-                sustainability over short term excitement.
-              </p>
-              <button 
-                className='glass-btn'
-                onClick={() => (window.location.href = "/Profile")}
-              >🡢 Open Account Now</button>
-            </div>
-          </div>
-        </section>
+          )}
 
-        {/* INFORMATION SECTION */}
-        <section className="info-section">
-          <article>
-            <h2 className='heading-txt-1'>ClutchDen: Built for Smart Collective Earnings</h2>
-            <p className='ads-txts'>
-              ClutchDen is a performance focused sports intelligence community
-              designed for individuals who value accuracy, strategy, and
-              sustainability. Through structured analysis and collective
-              participation, members gain access to opportunities typically
-              reserved for high volume professionals.
-            </p>
-          </article>
-
-          <article>
-            <h2 className='heading-txt-1'>What Is the AllStake System?</h2>
-            <p className='ads-txts'>
-              AllStake is ClutchDen’s proprietary collective staking model.
-              Participants pool capital into a unified position, allowing
-              greater market leverage, reduced volatility, and more disciplined
-              execution.
-            </p>
-          </article>
-
-          <article>
-            <h2 className='heading-txt-1' style={{padding: "10px"}}>How It Works</h2>
-            <ol>
-              <li className='ads-txts'>
-                <strong>Capital Pooling:</strong> Members opt into a shared
-                staking cycle.
-              </li>
-              <li className='ads-txts'>
-                <strong>Professional Analysis:</strong> Data‑driven selections
-                pass multiple validation layers.
-              </li>
-              <li className='ads-txts'>
-                <strong>Unified Execution:</strong> One strategic stake is
-                deployed.
-              </li>
-              <li className='ads-txts'>
-                <strong>Transparent Distribution:</strong> Returns are shared
-                fairly based on contribution.
-              </li>
-            </ol>
-          </article>
-        </section>
-
-          {/* WHY CLUTCHDEN */}
-        <section className="trust-section">
-          <h2 className='heading-txt-1' style={{marginBottom: "32px", textAlign: "center"}}>Why Professionals Choose ClutchDen</h2>
-          <div className="trust-grid">
-            <div>
-              <h4>Data Before Emotion</h4>
-              <p className='ads-txts'>Every selection is driven by probability modeling, historical performance, and real market signals never impulse.</p>
-            </div>
-            <div>
-              <h4>Collective Risk Control</h4>
-              <p className='ads-txts'>Pooling capital reduces volatility and protects members from isolated decision errors.</p>
-            </div>
-            <div>
-              <h4>Transparent Results</h4>
-              <p className='ads-txts'>Performance metrics are tracked, reviewed, and shared openly with the community.</p>
-            </div>
-            <div>
-              <h4>Built for Sustainability</h4>
-              <p className='ads-txts'>ClutchDen prioritizes consistency and longevity over short term hype.</p>
-            </div>
-          </div>
-        </section>
-
-        {/* ANALYSIS PHILOSOPHY */}
-        <section className="philosophy-section">
-          <h2 className='heading-txt-1'>Our Analysis Philosophy</h2>
-          <p className='ads-txts'>
-            Winning consistently isn’t about predicting outcomes it’s about understanding probability, risk, and value.
-          </p>
-          <p className='ads-txts'>
-            Our analysts evaluate fixtures using multi layer models that consider form trends, matchup data, market movement, and historical inefficiencies. Only selections that pass strict confidence thresholds reach the AllStake stage.
-          </p>
-        </section>
-
-        {/* RESPONSIBILITY */}
-        <section className="responsibility-section">
-          <h2 className='heading-txt-1'>Transparency & Responsibility</h2>
-          <p className='ads-txts'>
-            ClutchDen does not promise guaranteed returns. Participation involves risk, and members are encouraged to engage responsibly and within their financial limits.
-          </p>
-          <p className='ads-txts'>
-           Our platform is designed to educate, inform, and support disciplined decision making not reckless behavior.
-          </p>
-        </section>
-
-        {/* FINAL CTA */}
-        <section className="cta-section">
-          <h2 className='heading-txt-1'>Ready to Compete Smarter?</h2>
-          <p className='ads-txts'>Join a community built on intelligence, discipline, and collective strength.</p>
-          <button className="glass-btn" style={{ margin: "20px"}}>Enter ClutchDen</button>
-        </section>
-
-        <section className="metrics-section">
-          <h2 className="section-title">Built for Sustainability</h2>
-          <p className='ads-txts'>
-            Winning consistently isn’t about predicting outcomes it’s about understanding probability, risk, and value.
-          </p>
-
-          <div className="metrics-grid">
-            <div className="metric-card-1"> 
-              <div className='ad-img-containner-div'>
-                <img src={addimage2} alt="ads" className='adscenter' style={{width: "200px"}}/>
-              </div>
-            </div>
-          </div>
         </section>
 
         <section className="trust-section">
