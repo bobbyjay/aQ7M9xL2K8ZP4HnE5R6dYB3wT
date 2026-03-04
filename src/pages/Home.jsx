@@ -204,7 +204,7 @@ function HomeContent() {
     <div className="homepage-root" onClick={() => setShowMenuBar(false)}>
       {/* NAVBAR */}
       <header className="home-header">
-        <div ref={bannerRef} className='top-adds-banna'>adds stays here</div>
+        <div ref={bannerRef} className='top-adds-banna'>ads stays here</div>
         <nav ref={navbarRef} className={`stagnantnav ${isFixed ? 'fixed' : ''}`}>
           <HmNav />
         </nav>
@@ -254,7 +254,7 @@ function HomeContent() {
                   onKeyDown={handleKeyDown}
                   autoComplete="off"
                 />
-                <input type="submit" className="search-btn" />
+                <button type="submit" className="search-btn">Search</button>
               </form>
             </div>
             <div className='search-bar-Dropdown-container' ref={searchRef}>
