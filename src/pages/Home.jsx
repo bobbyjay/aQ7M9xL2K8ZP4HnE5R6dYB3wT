@@ -30,7 +30,7 @@ import mlbImg from '../assets/MLB_Logo.svg';
 import nflImg from '../assets/NFL_Logo.svg';
 import premierLeagueImg from '../assets/Premier_League.svg';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo} from 'react';
 function HomeContent() {
   const { setShowMenuBar } = useMenu();
   const [isFixed, setIsFixed] = useState(false);
@@ -39,6 +39,37 @@ function HomeContent() {
   const [navbarHeight, setNavbarHeight] = useState(0);
   const [showAllFeatures, setShowAllFeatures] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  
+  const [search, setSearch] = useState("");
+  const [results, setResults] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
+
+  const searchRef = useRef(null);
+
+  const sports = [
+    "Football",
+    "Basketball",
+    "Tennis",
+    "Baseball",
+    "Cricket",
+    "Hockey",
+    "MMA",
+    "Boxing",
+    "Rugby",
+    "Soccer",
+    "Swimming",
+    "Volleyball",
+    "Wrestling",
+    "Table Tennis",
+    "Golf",
+    "Skiing",
+    "Skateboarding",
+    "Track & Field",
+    "Gymnastics",
+    "Badminton"
+  ];
+
 
   // handler for "View All" button on click shows all the popular sports features 
   const handleViewAllBtn = () => {
@@ -69,6 +100,71 @@ function HomeContent() {
     const img = new Image(); img.onload = () => setImageLoaded(true); 
     img.src = coin1x; 
   }, []);
+  
+  // --- Filtered Results (Memoized + Debounced) ---
+  const filteredSports = useMemo(() => {
+    if (!search.trim()) return [];
+    const lower = search.toLowerCase();
+    return sports.filter((sport) => sport.toLowerCase().includes(lower));
+  }, [search, sports]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setResults(filteredSports.slice(0, 10));
+    }, 150); // debounce 150ms
+    return () => clearTimeout(timer);
+  }, [filteredSports]);
+
+  // --- Keyboard Navigation ---
+  const handleKeyDown = (e) => {
+    if (!results.length) return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveIndex((prev) => (prev < results.length - 1 ? prev + 1 : 0));
+    }
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIndex((prev) => (prev > 0 ? prev - 1 : results.length - 1));
+    }
+    if (e.key === "Enter") {
+      if (activeIndex >= 0) {
+        e.preventDefault();
+        selectItem(results[activeIndex]);
+      }
+    }
+    if (e.key === "Escape") {
+      setShowDropdown(false);
+    }
+  };
+  
+  /* ---------------- SELECT ITEM ---------------- */
+  const selectItem = (sport) => {
+    setSearch(sport);
+    setShowDropdown(false);
+    setActiveIndex(-1);
+  };
+
+  // --- Click Outside to Close Dropdown ---
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  /* ---------------- SHOW DROPDOWN ONLY WHEN TYPING ---------------- */
+  useEffect(() => {
+    if (search.trim()) {
+      setShowDropdown(true);
+    } else {
+      setShowDropdown(false);
+      setActiveIndex(-1);
+    }
+  }, [search]);
 
   if (!imageLoaded) {
     return (
@@ -138,21 +234,49 @@ function HomeContent() {
           </div>
           {/* search for sports */}
           <div className='search-bar-container-div'>
-            <div className='search-bar-container'>
-              <div>
+            <div className='search-bar-container' ref={searchRef}>
+              <div className='center-searchIcon'>
                 <img 
                   src={searchIcon} 
                   alt="search icon" 
                   className='searchIcon'
                 />
               </div>
-              <input 
-                type="text" 
-                name="sports-search-engin" 
-                id="sports-search-engin" 
-                aria-placeholder='Search for a sports game'
-                className='search-input-box'
-              />
+              <form onSubmit={(e) => e.preventDefault()} className='search-form-containner'>
+                <input 
+                  type="text" 
+                  name="sports-search-engin" 
+                  id="sports-search-engin" 
+                  placeholder="Search for a sports game ..."
+                  className='search-input-box'
+                  value={search ?? ""} 
+                  onChange={(e) => setSearch(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  autoComplete="off"
+                />
+                <input type="submit" className="search-btn" />
+              </form>
+            </div>
+            <div className='search-bar-Dropdown-container' ref={searchRef}>
+                  {showDropdown && results.length > 0 && (
+                    <div className="search-dropdown">
+                      {results.map((sport, index) => {
+                        const regex = new RegExp(`(${search})`, "gi");
+                        const highlighted = sport.replace(
+                          regex,
+                          (match) => `<span class="search-highlight">${match}</span>`
+                        );
+                        return (
+                          <div
+                            key={index}
+                            className={`search-item ${index === activeIndex ? "active" : ""}`}
+                            onClick={() => selectItem(sport)}
+                            dangerouslySetInnerHTML={{ __html: highlighted }}
+                          />
+                        );
+                      })}
+                    </div>
+                  )}
             </div>
           </div>
 

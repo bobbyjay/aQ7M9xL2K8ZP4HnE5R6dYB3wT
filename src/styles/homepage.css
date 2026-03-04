@@ -229,9 +229,10 @@ body {
 
 .search-bar-container-div{
   padding: 10px;
+  margin: 10px 0;
 }
 .types-of-sports-div{
-  padding: 10px;
+  padding: 0 10px;
 }
 .sports-ty-name{
   text-shadow: 0 0 12px rgba(224,185,92,0.55);
@@ -256,17 +257,79 @@ body {
 .search-bar-container{
   display: grid;
   grid-template-columns: auto 1fr;
-  background: rgba(255,255,255,0.08);
+  border: 2px solid transparent;
+  background: linear-gradient(#081521, #050e17)
+    padding-box, 
+    linear-gradient(
+      180deg,
+      #f6e6b4 0%,
+      #e6c36a 35%,
+      #caa24a 60%,
+      #8a6a2a 100%
+    ) 
+  border-box;
   padding: 10px;
   border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.18);
   backdrop-filter: blur(12px);
+}
+
+.center-searchIcon{
+  display: flex;
+  align-items: center;     /* vertical center */
+  justify-content: center; /* horizontal center */
+  height: 100%;
 }
 
 .search-input-box{
   background: transparent;
   outline: transparent;
   border: none;
+  padding-left: 10px;
+}
+
+.search-form-containner{
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+.search-input-box{
+  font-size: 1em;
+  color: #e2e2e2;
+}
+.search-input-box::placeholder {
+  color: rgba(255,255,255,0.45);
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+.search-input-box::-webkit-input-placeholder { color: #9aa0a6; }
+.search-input-box:-ms-input-placeholder { color: #9aa0a6; }
+
+.search-bar-Dropdown-container{
+  position: relative;
+}
+
+.search-dropdown{
+  position: absolute;
+  top: 100%;
+  left: 0;
+
+  background: rgba(20, 20, 20, 0.384);
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+
+  overflow: hidden;
+  z-index: 999;
+  color: #ffffff;
+  padding: 10px;
+}
+
+.search-highlight {
+  color: #f87800;
 }
 
 .scroll-typ-sports{
@@ -285,15 +348,19 @@ body {
   content: "";
   position: absolute;
   top: 0;
-  left: 0;
+  left: 10px;
   width: 40px;
   height: 100%;
   pointer-events: none;
+  z-index: 1;
 
   background: linear-gradient(
-    to right,
-    rgba(0,0,0,0.25),
-    rgba(0,0,0,0)
+    to left,
+    #050e17fa 100%
+    #050e17 85%,
+    #081521 65%,
+    #0a1a2b 35%,
+    #0b1e33 0%
   );
 }
 
@@ -302,15 +369,19 @@ body {
   content: "";
   position: absolute;
   top: 0;
-  right: 0;
+  right: 10px;
   width: 40px;
   height: 100%;
   pointer-events: none;
+  z-index: 1;
 
   background: linear-gradient(
     to left,
-    rgba(0, 0, 0, 0.274),
-    rgba(0, 0, 0, 0.014)
+    #0b1e33 0%,
+    #0a1a2be7 25%,
+    #081521b0 50%,
+    #050e174f 70%,
+    #050e1700 100%
   );
 }
 

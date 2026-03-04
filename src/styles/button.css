@@ -224,3 +224,54 @@
     linear-gradient(180deg,#e2e1dee0 2%, #e0b85ce0 50%, #cfa04ae1 95%, #e2e1dedc 2%) border-box;
   color: #e0b85ce0;
 }
+
+.search-btn{
+  padding: 0 1.2rem;
+  height: 40px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(48, 58, 68, 0.85),
+    rgba(25, 29, 34, 0.85)
+  );
+
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 
+    background 0.2s ease,
+    transform 0.12s ease,
+    box-shadow 0.2s ease;
+
+  box-shadow:
+    0 4px 14px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.search-btn:hover{
+  background: linear-gradient(
+    180deg,
+    rgba(30,55,75,0.95),
+    rgba(10,20,32,0.95)
+  );
+
+  box-shadow:
+    0 6px 18px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.search-btn:active{
+  transform: translateY(0);
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.35),
+    inset 0 2px 6px rgba(0,0,0,0.4);
+}
+.search-btn{
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
