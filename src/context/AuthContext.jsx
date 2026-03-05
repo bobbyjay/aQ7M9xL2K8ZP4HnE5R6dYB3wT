@@ -601,13 +601,7 @@ const replyToTicket = async (ticketId, formData) => {
   const getLatestNews = async () => {
     try {
       const res = await api.getLatestNews();
-
-      if (!res.data?.success) {
-        return { success: false, message: res.data?.message || "Failed to fetch latest news", news: [] };
-      }
-
-      const news = res.data.data || [];
-      return { success: true, message: res.data.message, news };
+      return res.data;
     } catch (err) {
       console.error("Latest news fetch failed:", err);
       return { success: false, message: err.message, news: [] };

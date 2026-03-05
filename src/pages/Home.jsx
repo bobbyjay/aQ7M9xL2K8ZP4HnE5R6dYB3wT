@@ -179,43 +179,73 @@ function HomeContent() {
       try {
         setNewsLoading(true);
 
-        const response = await getLatestNews();
+        const res = await getLatestNews();
 
-        setLatestNews(response.data);
-        setNewsError(null);
-
-        if (Array.isArray(data)) {
-          setLatestNews(data);
+        // ✅ check if array
+        if (Array.isArray(res)) {
+          setLatestNews(res);
+          setNewsError(null);
         } else {
           setLatestNews([]);
+          setNewsError("Failed to fetch latest news.");
+          console.error("Failed to fetch latest news: Response is not an array");
         }
-      } catch (error) {
-        console.error("Failed to fetch latest news:", error);
-        setNewsError(error.message || "Failed to fetch latest news.");
+ 
+      } catch (err) {
+        console.error("Failed to fetch latest news:", err);
+        setNewsError("Failed to fetch latest news.");
         setLatestNews([]);
       } finally {
         setNewsLoading(false);
       }
     };
 
-      fetchLatestNews();
-    }, [getLatestNews]
-  );
+    fetchLatestNews();
+  }, [getLatestNews]);
 
   const fetchedNews = useRef(false);
 
-  /* ---------------- Prevent double API calls ---------------- */
+  /* ---------------- Prevent double API calls + Retry Logic ---------------- */
   useEffect(() => {
     if (fetchedNews.current) return;
     fetchedNews.current = true;
 
+    const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
     const fetchLatestNews = async () => {
+      const MAX_RETRIES = 3;
+      const RETRY_DELAY = 2000; // 2 seconds between retries
+
+      setNewsLoading(true);
+
       try {
-        setNewsLoading(true);
-        const data = await getLatestNews();
+        let attempt = 0;
+        let data = null;
+
+        while (attempt < MAX_RETRIES) {
+          try {
+            data = await getLatestNews();
+  
+            if (data && data.length > 0) {
+              break; // success
+            }
+
+          } catch (error) {
+            console.warn(`News fetch attempt ${attempt + 1} failed`);
+          }
+
+          attempt++;
+
+          if (attempt < MAX_RETRIES) {
+            await delay(RETRY_DELAY); // wait before retry
+          }
+        }
+
         setLatestNews(data || []);
+
       } catch (error) {
-        console.error(error);
+        console.error("Failed to fetch latest news:", error);
+        setLatestNews([]);
       } finally {
         setNewsLoading(false);
       }
@@ -449,26 +479,6 @@ function HomeContent() {
             </div>
           </div>
 
-          <div className="hero-content">
-            <div className="hero-text">
-              <h4 className="hero-sub">THE CHALLENGE ARENA FOR REAL ONES</h4>
-              <h1 className="hero-title">BIG TIME WINS</h1>
-              <p className="hero-desc">
-                Join ClutchDen where elite analysis, community power, and
-                disciplined strategy come together to create consistent results.
-              </p>
-              <div className="btn0001-div">
-                <button 
-                  className="glass-btn"
-                  onClick={() => (window.location.href = "/bets")}
-                >WIN NOW</button>
-              </div>
-            </div>
-
-            <div className="hero-image-wrap">
-              <div className="hero-image"></div>
-            </div>
-          </div>
         </section>
 
         {/* NEWS SECTION */}
@@ -484,19 +494,7 @@ function HomeContent() {
 
               <div className="featured-news skeleton"></div>
 
-              <div className="news-list">
-                <div className="news-card skeleton"></div>
-                <div className="news-card skeleton"></div>
-                <div className="news-card skeleton"></div>
-                <div className="news-card skeleton"></div>
-              </div>
-
             </div>
-          )}
-
-          {/* Error */}
-          {!newsLoading && newsError && (
-            <p className="error">{newsError}</p>
           )}
 
           {/* No Data */}
@@ -509,7 +507,10 @@ function HomeContent() {
             <div className="news-grid">
 
               <div className="featured-news">
-                <img src={latestNews[0].image} alt={latestNews[0].title} />
+                <img
+                  src={latestNews[0].image?.url || "/images/placeholder.jpg"}
+                  alt={latestNews[0].image?.alt || latestNews[0].title}
+                />
                 <div className="featured-overlay">
                   <h3>{latestNews[0].title}</h3>
                   <p>{latestNews[0].summary}</p>
