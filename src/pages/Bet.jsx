@@ -16,6 +16,9 @@ import { Navigate, useNavigate } from "react-router-dom";
 import LeaderboardCarousel from "../components/LeaderboardCarousel.jsx";
 import { useRef } from "react";
 
+//SEO
+import Seo from '../components/Seo';
+
 export default function BetPage() {
   const {
     getEvents,
@@ -229,6 +232,15 @@ export default function BetPage() {
 
   return (
     <div style={{ margin: "0" }} >
+      <Seo
+        title="ClutchDen | Bet Page"
+        description="ClutchDen | Bet Page"
+        canonical="https://clutchden.online/bets"
+        url="https://clutchden.online/bets"
+        twitterTitle="ClutchDen | Bet Page"
+        twitterDescription="stake your bets and win big with ClutchDen! Explore our betting page for the latest events, markets, and top winners. Join the excitement today!"
+      />
+
       <div >
         <div className="heading-containner" >
           <div className="heading-containner-div">

@@ -1,19 +1,20 @@
 // ../pages/Home.jsx
 import React from 'react';
 import HmNav from '../components/HmNav';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMenu, MenuProvider } from "../context/MenuContext";
 import { useAuth } from "../context/AuthContext";
 import Footersection from '../components/footer';
+import FixtureItem from '../components/FixturesSection';
 import '../styles/homepage.css';
 import '../styles/button.css';
 import '../styles/font_stylesheet.css';
 import addimage1 from '../assets/images/20251124_160453012.jpg';
 import addimage2 from '../assets/images/20251124_160453256.jpg';
 import addimage3 from '../assets/images/20251124_160430700.png';
-import coin1x from '../assets/Coins-ftsy-spts-ptrms-emb@1x.png';
-import coin2x from '../assets/Coins-ftsy-spts-ptrms-emb@2x.png';
-import coin3x from '../assets/Coins-ftsy-spts-ptrms-emb@3x.png';
+import coin1x from '../assets/Coins-ftsy-spts-ptrms-emb@1x.webp';
+import coin2x from '../assets/Coins-ftsy-spts-ptrms-emb@2x.webp';
+import coin3x from '../assets/Coins-ftsy-spts-ptrms-emb@3x.webp';
 import goldRush from "../assets/images/soccer_diagram.png";
 import searchIcon from "../assets/searchIcon.svg";
 import soccerIcon from "../assets/soccerIcon.svg";
@@ -30,10 +31,18 @@ import nflImg from '../assets/NFL_Logo.svg';
 import premierLeagueImg from '../assets/Premier_League.svg';
 
 import { useEffect, useState, useRef, useMemo} from 'react';
+
+//SEO
+import Seo from '../components/Seo';
+
 function HomeContent() {
   const { 
-    getLatestNews 
+    getLatestNews,
+    desktopWidthSize,
+    setDesktopWidthSize,
   } = useAuth();
+
+  const navigate = useNavigate();
   const { setShowMenuBar } = useMenu();
   const [isFixed, setIsFixed] = useState(false);
   const navbarRef = useRef(null);
@@ -48,6 +57,7 @@ function HomeContent() {
   const [activeIndex, setActiveIndex] = useState(-1);
 
   const searchRef = useRef(null);
+  const isSearchActive = search.trim().length > 0;
 
   /*----------- LATEST NEWS ------------*/
   const [latestNews, setLatestNews] = useState([]);
@@ -124,7 +134,14 @@ function HomeContent() {
 
   // --- Keyboard Navigation ---
   const handleKeyDown = (e) => {
-    if (!results.length) return;
+    if (!results.length) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        setShowDropdown(false);
+        setActiveIndex(-1);
+      }
+      return;
+    }
 
     if (e.key === "ArrowDown") {
       e.preventDefault();
@@ -135,14 +152,36 @@ function HomeContent() {
       setActiveIndex((prev) => (prev > 0 ? prev - 1 : results.length - 1));
     }
     if (e.key === "Enter") {
-      if (activeIndex >= 0) {
-        e.preventDefault();
-        selectItem(results[activeIndex]);
-      }
+      e.preventDefault();
+      const selectedItem = activeIndex >= 0 ? results[activeIndex] : results[0];
+      selectItem(selectedItem);
     }
     if (e.key === "Escape") {
+      e.preventDefault();
       setShowDropdown(false);
+      setActiveIndex(-1);
     }
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+
+    const trimmedSearch = search.trim();
+    if (!trimmedSearch) {
+      setShowDropdown(false);
+      setActiveIndex(-1);
+      return;
+    }
+
+    const selectedItem = activeIndex >= 0 ? results[activeIndex] : results[0];
+
+    if (selectedItem) {
+      selectItem(selectedItem);
+    }
+
+    navigate('/search-results', { state: { query: trimmedSearch } });
+    setShowDropdown(false);
+    setActiveIndex(-1);
   };
   
   /* ---------------- SELECT ITEM ---------------- */
@@ -205,50 +244,121 @@ function HomeContent() {
 
   const fetchedNews = useRef(false);
 
+  /* ---------------- HANDLE WINDOW RESIZE ---------------- */
+  useEffect(() => {
+    const handleResize = () => {
+      setDesktopWidthSize(window.innerWidth >= 1000);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [setDesktopWidthSize]);
+
   /* ---------------- Prevent double API calls + Retry Logic ---------------- */
   useEffect(() => {
     if (fetchedNews.current) return;
     fetchedNews.current = true;
-
-    const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+  
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  
+    const CACHE_KEY = "latestNews";
+    const CACHE_TIME_KEY = "latestNewsTime";
+  
+    // Cache for 15 minutes
+    const CACHE_DURATION = 15 * 60 * 1000;
 
     const fetchLatestNews = async () => {
-      const MAX_RETRIES = 3;
-      const RETRY_DELAY = 2000; // 2 seconds between retries
+    // ----------------------------
+    // Check cache first
+    // ----------------------------
+    const cachedNews = localStorage.getItem(CACHE_KEY);
+    const cachedTime = localStorage.getItem(CACHE_TIME_KEY);
 
-      setNewsLoading(true);
+    if (cachedNews && cachedTime) {
+      const isCacheValid =
+        Date.now() - Number(cachedTime) < CACHE_DURATION;
 
-      try {
-        let attempt = 0;
-        let data = null;
-
-        while (attempt < MAX_RETRIES) {
-          try {
-            data = await getLatestNews();
-  
-            if (data && data.length > 0) {
-              break; // success
-            }
-
-          } catch (error) {
-            console.warn(`News fetch attempt ${attempt + 1} failed`);
-          }
-
-          attempt++;
-
-          if (attempt < MAX_RETRIES) {
-            await delay(RETRY_DELAY); // wait before retry
-          }
+      if (isCacheValid) {
+        try {
+          setLatestNews(JSON.parse(cachedNews));
+          setNewsLoading(false);
+          return;
+        } catch {
+          localStorage.removeItem(CACHE_KEY);
+          localStorage.removeItem(CACHE_TIME_KEY);
         }
-
-        setLatestNews(data || []);
-
-      } catch (error) {
-        console.error("Failed to fetch latest news:", error);
-        setLatestNews([]);
-      } finally {
-        setNewsLoading(false);
       }
+    }
+
+    const MAX_RETRIES = 5;
+    const BASE_DELAY = 2000;
+
+    setNewsLoading(true);
+
+    try {
+      let data = [];
+
+      for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+        try {
+          data = await getLatestNews();
+
+          if (Array.isArray(data)) {
+            // Save to cache
+            localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+            localStorage.setItem(
+              CACHE_TIME_KEY,
+              Date.now().toString()
+            );
+
+            setLatestNews(data);
+            return;
+          }
+        } catch (error) {
+          const status = error?.response?.status;
+
+          if (
+            status &&
+            ![429, 500, 502, 503, 504].includes(status)
+          ) {
+            throw error;
+          }
+
+          if (attempt === MAX_RETRIES) {
+            throw error;
+          }
+
+          const retryAfter =
+            Number(error?.response?.headers?.["retry-after"]) * 1000;
+
+          const delay =
+            retryAfter ||
+            BASE_DELAY * Math.pow(2, attempt);
+
+          console.warn(
+            `Attempt ${attempt + 1} failed (${status}). Retrying in ${
+              delay / 1000
+            }s...`
+          );
+
+          await sleep(delay);
+        }
+      }
+
+      setLatestNews([]);
+    } catch (error) {
+      console.error("Failed to fetch latest news:", error);
+
+      // If request fails, use expired cache if available
+      if (cachedNews) {
+        try {
+          setLatestNews(JSON.parse(cachedNews));
+          return;
+        } catch {}
+      }
+      setLatestNews([]);
+    } finally {
+      setNewsLoading(false);
+    }
     };
 
     fetchLatestNews();
@@ -322,6 +432,7 @@ function HomeContent() {
           </div>
           {/* search for sports */}
           <div className='search-bar-container-div'>
+
             <div className='search-bar-container' ref={searchRef}>
               <div className='center-searchIcon'>
                 <img 
@@ -330,7 +441,7 @@ function HomeContent() {
                   className='searchIcon'
                 />
               </div>
-              <form onSubmit={(e) => e.preventDefault()} className='search-form-containner'>
+              <form onSubmit={handleSearchSubmit} className='search-form-containner'>
                 <input 
                   type="text" 
                   name="sports-search-engin" 
@@ -338,13 +449,23 @@ function HomeContent() {
                   placeholder="Search for a sports game ..."
                   className='search-input-box'
                   value={search ?? ""} 
-                  onChange={(e) => setSearch(e.target.value)}
+                  onChange={(e) => {
+                    const nextValue = e.target.value;
+                    setSearch(nextValue);
+                    setActiveIndex(-1);
+
+                    if (!nextValue.trim()) {
+                      setResults([]);
+                      setShowDropdown(false);
+                    }
+                  }}
                   onKeyDown={handleKeyDown}
                   autoComplete="off"
                 />
-                <button type="submit" className="search-btn">Search</button>
+                <button type="submit" className="search-btn" disabled={!isSearchActive}>Search</button>
               </form>
             </div>
+
             <div className='search-bar-Dropdown-container' ref={searchRef}>
                   {showDropdown && results.length > 0 && (
                     <div className="search-dropdown">
@@ -366,32 +487,70 @@ function HomeContent() {
                     </div>
                   )}
             </div>
+
           </div>
 
           {/* types of sports */}
-          <div className='types-of-sports-div'>
-            <div className='scroll-typ-sports'>
-              <div className='sports-ty-soccer'>
-                <div className='sport-icon-div'><img src={soccerIcon} alt="soccer" className='sportIcon' /></div>
-                <div className='sports-ty-name'>soccer</div>
+          <div className={`types-of-sports-div ${desktopWidthSize ? "desktop" : "mobile"}`}>
+        
+            {desktopWidthSize ? (
+
+              <div className='scroll-typ-sports-desktop'>
+              
+                <div className='sports-ty-soccer'>
+                  <div className='sport-icon-div'><img src={soccerIcon} alt="soccer" className='sportIcon' /></div>
+                  <div className='sports-ty-name'>soccer</div>
+                </div>
+                <div className='sports-ty-nba'>
+                  <div className='sport-icon-div'><img src={basketballIcon} alt="basketball" className='sportIcon' /></div>
+                  <div className='sports-ty-name'>basketball</div>
+                </div>
+                <div className='sports-ty-tennis'>
+                  <div className='sport-icon-div'><img src={tennisIcon} alt="tennis" className='sportIcon' /></div>
+                  <div className='sports-ty-name'>tennis</div>
+                </div>
+                <div className='sports-ty-mlb'>
+                  <div className='sport-icon-div'><img src={baseballIcon} alt="baseball" className='sportIcon' /></div>
+                  <div className='sports-ty-name'>baseball</div>
+                </div>
+                <div className='sports-ty-cs2'>
+                  <div className='sport-icon-div'><img src={cs2Icon} alt="cs2" className='sportIcon' /></div>
+                  <div className='sports-ty-name'>cs2</div>
+                </div>
+              
+
               </div>
-              <div className='sports-ty-nba'>
-                <div className='sport-icon-div'><img src={basketballIcon} alt="basketball" className='sportIcon' /></div>
-                <div className='sports-ty-name'>basketball</div>
+
+            ) : (
+              
+              <div className='scroll-typ-sports'>
+                <div className='scroll-typ-content'>
+                  <div className='sports-ty-soccer'>
+                    <div className='sport-icon-div'><img src={soccerIcon} alt="soccer" className='sportIcon' /></div>
+                    <div className='sports-ty-name'>soccer</div>
+                  </div>
+                  <div className='sports-ty-nba'>
+                    <div className='sport-icon-div'><img src={basketballIcon} alt="basketball" className='sportIcon' /></div>
+                    <div className='sports-ty-name'>basketball</div>
+                  </div>
+                  <div className='sports-ty-tennis'>
+                    <div className='sport-icon-div'><img src={tennisIcon} alt="tennis" className='sportIcon' /></div>
+                    <div className='sports-ty-name'>tennis</div>
+                  </div>
+                  <div className='sports-ty-mlb'>
+                    <div className='sport-icon-div'><img src={baseballIcon} alt="baseball" className='sportIcon' /></div>
+                    <div className='sports-ty-name'>baseball</div>
+                  </div>
+                  <div className='sports-ty-cs2'>
+                    <div className='sport-icon-div'><img src={cs2Icon} alt="cs2" className='sportIcon' /></div>
+                    <div className='sports-ty-name'>cs2</div>
+                  </div>
+                </div>
               </div>
-              <div className='sports-ty-tennis'>
-                <div className='sport-icon-div'><img src={tennisIcon} alt="tennis" className='sportIcon' /></div>
-                <div className='sports-ty-name'>tennis</div>
-              </div>
-              <div className='sports-ty-mlb'>
-                <div className='sport-icon-div'><img src={baseballIcon} alt="baseball" className='sportIcon' /></div>
-                <div className='sports-ty-name'>baseball</div>
-              </div>
-              <div className='sports-ty-cs2'>
-                <div className='sport-icon-div'><img src={cs2Icon} alt="cs2" className='sportIcon' /></div>
-                <div className='sports-ty-name'>cs2</div>
-              </div>
-            </div>
+              
+            )}
+
+          
           </div>
 
           {/* line divider */}
@@ -533,6 +692,11 @@ function HomeContent() {
           )}
 
         </section>
+
+        {/* FIXTURES SECTION */}
+        {/* <section>
+          <div><FixtureItem /></div>
+        </section> */}
 
         <section className="trust-section">
           <h2 className='heading-txt-1' style={{marginBottom: "32px", textAlign: "center"}}>Hear From Our Customers</h2>
@@ -696,6 +860,24 @@ function HomeContent() {
 export default function Home() {
   return (
     <MenuProvider>
+      <Seo
+        title="ClutchDen | Data-Driven Sports Intelligence & Winning Strategies"
+        description="ClutchDen is a performance-driven sports intelligence platform built on professional analysis, real-time data, and disciplined strategies to help you make smarter decisions and achieve consistent results."
+        keywords="ClutchDen, sports betting, sports intelligence, football predictions, basketball predictions, tennis predictions, esports, live odds, betting tips, sports analysis, data analytics, winning strategies"
+        author="ClutchDen"
+        robots="index, follow"
+        canonical="https://clutchden.online/home"
+        image="https://clutchden.onrender.com/api/winners/694b1b411a20171048782e75/image"
+        url="https://clutchden.online/home"
+        siteName="ClutchDen"
+        twitterSite="@clutchden"
+        twitterCreator="@clutchden"
+        themeColor="#0B1E33"
+        ogTitle="ClutchDen | Where Data, Discipline & Strategy Create Winners"
+        ogDescription="Join ClutchDen and gain access to professional sports analysis, data-driven insights, transparent performance, and disciplined strategies designed for long-term success."
+        twitterTitle="ClutchDen 🏆 | Data-Driven Sports Intelligence"
+        twitterDescription="Compete smarter with professional analysis, real-time sports data, disciplined strategies, and transparent performance metrics."
+      />
       <HomeContent />
     </MenuProvider>
   );

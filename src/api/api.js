@@ -163,6 +163,8 @@ const api = {
   // LATEST NEWS
   getLatestNews: () => API.get("/news/latest"),
 
+  getfixtures: () => API.get("/fixtures"),
+
 
 };
 

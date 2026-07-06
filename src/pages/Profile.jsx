@@ -136,7 +136,8 @@ export default function Profile() {
 
   /* ---- UI ---- */
 
-  if (loading) return <div className="loader-overlay" role="status" aria-live="polite" aria-label="loading">
+  if (loading) return 
+    <div className="loader-overlay" role="status" aria-live="polite" aria-label="loading">
                     <svg className="spinner" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                       <circle cx="12" cy="2" r="0" fill="#3b82f6">
                         <animate attributeName="r" begin="0" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate>
@@ -163,7 +164,7 @@ export default function Profile() {
                         <animate attributeName="r" begin="0.875s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate>
                       </circle>
                     </svg>
-                  </div>;
+    </div>;
   if (error) return <div style={{ color: "red" }}>{error}</div>;
 
   return (

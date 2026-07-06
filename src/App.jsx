@@ -17,6 +17,7 @@ import CustomerSupportPage from './pages/customerSupport';
 import TermsOfService from './pages/termsOfService';
 import Sports from './pages/sports';
 import About from './pages/About';
+import SearchResults from './pages/SearchResults';
 import NotFound from './pages/NotFound';
 
 // ---------------------------
@@ -50,6 +51,7 @@ export default function App() {
           <Route path="/support-page" element={<CustomerSupportPage />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/about" element={<About />} />
+          <Route path="/search-results" element={<SearchResults />} />
 
           <Route
             path="/sports"

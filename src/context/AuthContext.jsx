@@ -21,6 +21,7 @@ export function AuthProvider({ children }) {
   const [receiptLoading, setReceiptLoading] = useState(false);     
   const [receiptError, setReceiptError] = useState(null);
   const [profilePicUrl, setProfilePicUrl] = useState(null);
+  const [desktopWidthSize, setDesktopWidthSize] = useState(window.innerWidth >= 1000);
 
   /* ---------------------------------------------------------
      🔄 INJECT TOKEN GETTER INTO api.js
@@ -608,6 +609,16 @@ const replyToTicket = async (ticketId, formData) => {
     }
   };
 
+  const fixtures = async () => {
+    try {
+      const res = await api.getfixtures();
+      return res.data;
+    } catch (err) {
+      console.error("Fixtures fetch failed:", err);
+      return { success: false, message: err.message, fixtures: [] };
+    }
+  };
+
   return (
     <AuthContext.Provider
         value={{
@@ -637,6 +648,10 @@ const replyToTicket = async (ticketId, formData) => {
           updateProfile,
           fetchReceipt, // ⬅️ added
           getLatestNews, // ⬅️ get latest news function into context
+          fixtures, // ⬅️ added fixtures function
+          desktopWidthSize,
+          setDesktopWidthSize,
+          profilePicUrl,
 
           isAuthenticated: !!user,
         }}
