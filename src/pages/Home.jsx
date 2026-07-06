@@ -191,6 +191,20 @@ function HomeContent() {
     setActiveIndex(-1);
   };
 
+  const normalizeImageUrl = (url) => {
+    if (!url) return url;
+
+    try {
+      const parsedUrl = new URL(url, window.location.origin);
+      if (parsedUrl.protocol === 'http:') {
+        parsedUrl.protocol = 'https:';
+      }
+      return parsedUrl.toString();
+    } catch {
+      return url.startsWith('http://') ? url.replace(/^http:\/\//i, 'https://') : url;
+    }
+  };
+
   // --- Click Outside to Close Dropdown ---
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -667,7 +681,7 @@ function HomeContent() {
 
               <div className="featured-news">
                 <img
-                  src={latestNews[0].image?.url || "/images/placeholder.jpg"}
+                  src={normalizeImageUrl(latestNews[0].image?.url) || "/images/placeholder.jpg"}
                   alt={latestNews[0].image?.alt || latestNews[0].title}
                 />
                 <div className="featured-overlay">
@@ -679,7 +693,7 @@ function HomeContent() {
               <div className="news-list">
                 {latestNews.slice(1, 5).map((news) => (
                   <div key={news.id} className="news-card">
-                    <img src={news.image} alt={news.title} />
+                    <img src={normalizeImageUrl(news.image)} alt={news.title} />
                     <div className="news-content">
                       <h4>{news.title}</h4>
                       <p>{news.summary}</p>
