@@ -1,8 +1,8 @@
-import { vercelPreset } from "@vercel/react-router/vite";
+const { vercelPreset } = require("@vercel/react-router/vite");
 
-export default {
+module.exports = {
   ssr: true,
-  presets: [vercelPreset()], // 👈 Adds native Vercel optimization support
+  presets: [vercelPreset()],
 
   future: {
     v8_middleware: true,
