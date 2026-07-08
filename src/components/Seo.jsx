@@ -1,4 +1,7 @@
-import { Helmet } from "react-helmet-async";
+import * as ReactHelmetAsync from "react-helmet-async";
+
+// Safely extract Helmet for seamless client-build and serverless runtime interop
+const Helmet = ReactHelmetAsync.Helmet || (ReactHelmetAsync.default && ReactHelmetAsync.default.Helmet);
 
 function Seo({
   title = "ClutchDen | Data-Driven Sports Intelligence & Winning Strategies",
