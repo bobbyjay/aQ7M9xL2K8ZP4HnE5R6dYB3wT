@@ -1,5 +1,4 @@
-import pkg from "react-helmet-async";
-const { Helmet } = pkg; // 👈 Safely destructure Helmet from the default export for ESM/CJS compatibility
+import { Helmet } from "react-helmet-async";
 
 function Seo({
   title = "ClutchDen | Data-Driven Sports Intelligence & Winning Strategies",
@@ -55,7 +54,7 @@ function Seo({
       <meta name="twitter:creator" content={twitterCreator} />
       <meta name="twitter:title" content={twitterTitle || title} />
       <meta
-        property="og:description"
+        name="twitter:description"
         content={twitterDescription || description}
       />
       <meta name="twitter:image" content={twitterImage || image} />
