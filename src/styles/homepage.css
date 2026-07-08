@@ -150,6 +150,11 @@ body {
   z-index: 9999;
 }
 
+#HmNav {
+  width: 100%;
+  height: 100%;
+}
+
 /* Top banner that scrolls away */
 .top-adds-banna {
   width: 100%;
@@ -234,6 +239,33 @@ body {
 .types-of-sports-div{
   padding: 0 10px;
 }
+
+.search-bar-container {
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.search-bar-container:focus-within {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+.search-input-box {
+  transition: color 180ms ease;
+}
+
+.search-input-box:focus {
+  color: #ffffff;
+}
+
+.search-dropdown .search-item {
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.search-dropdown .search-item:hover,
+.search-dropdown .search-item:focus-visible {
+  background: rgba(255,255,255,0.12);
+  transform: translateX(2px);
+}
 .sports-ty-name{
   text-shadow: 0 0 12px rgba(224,185,92,0.55);
   background: linear-gradient(
@@ -288,7 +320,13 @@ body {
   font-size: clamp(0.8em, 3vw, 1.2em) 'Outfit', sans-serif;
 }
 
+#searchBarForm{
+  display: grid;
+}
+
 .search-form-containner{
+  width: 100%;
+  height: 100%;
   display: grid;
   grid-template-columns: 1fr auto;
   overflow: hidden;
@@ -342,10 +380,32 @@ body {
   position: relative;
 }
 
-.scroll-typ-sports{
+.scroll-typ-sports-mobile{
   overflow-x: auto;
   text-align: center;
   padding-bottom: 5px;
+}
+
+.scroll-typ-sports-mobile {
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+}
+
+.scroll-typ-sports-mobile::-webkit-scrollbar {
+  height: 4px;
+}
+
+.scroll-typ-sports-mobile::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-typ-sports-mobile::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 999px;
+}
+
+.scroll-typ-sports-mobile::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
 }
 
 .scroll-typ-content {
@@ -397,8 +457,11 @@ body {
 }
 
 
-.sportIcon{
+.sport-icon-div .sportIcon{
   width: 32px;
+  max-width: 65px;
+  max-height: 65px;
+  height: 32px;
 }
 
 .sports-ty-soccer,
@@ -429,6 +492,17 @@ body {
   background-color: #55555570; 
   padding: 10px 0;
   border-radius: 10px;
+  transition: transform 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+  touch-action: manipulation;
+}
+
+.sports-ty-cs2:hover,
+.sports-ty-mlb:hover,
+.sports-ty-tennis:hover,
+.sports-ty-nba:hover,
+.sports-ty-soccer:hover {
+  background-color: rgba(85, 85, 85, 0.9);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
 }
 
 /* =================
@@ -468,6 +542,21 @@ body {
   border-box;
   border-radius: 14px;
   overflow: hidden;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.populer-sports-div.is-hidden {
+  display: none;
+}
+
+.populer-sports-div.is-visible {
+  display: block;
+  animation: fadeInUp 180ms ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 .populer-sports-grid{
   display: grid;
@@ -479,6 +568,12 @@ body {
 }
 .populer-sport-card{
   border-radius: 10px;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.populer-sport-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
 }
 .populer-sport-image-div{
   width: 100%;

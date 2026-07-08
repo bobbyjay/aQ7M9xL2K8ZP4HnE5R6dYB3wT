@@ -7,7 +7,7 @@ function Seo({
   author = "ClutchDen",
   robots = "index, follow",
   canonical,
-  url = window.location.href,
+  url,
   image = "https://clutchden.onrender.com/api/winners/694b1b411a20171048782e75/image",
   siteName = "ClutchDen",
   twitterSite = "@clutchden",
@@ -17,8 +17,9 @@ function Seo({
   ogDescription,
   twitterTitle,
   twitterDescription,
+  twitterImage,
 }) {
-  const pageUrl = canonical || url;
+  const pageUrl = canonical || url || (typeof window !== "undefined" ? window.location.href : "https://clutchden.online/");
 
   return (
     <Helmet>
@@ -56,10 +57,13 @@ function Seo({
         name="twitter:description"
         content={twitterDescription || description}
       />
-      <meta name="twitter:image" content={image} />
+      <meta name="twitter:image" content={twitterImage || image} />
 
       {/* Extra */}
       <meta name="format-detection" content="telephone=no" />
+
+      {/* Favicon */}
+      <link rel="icon" type="image/svg+xml" href="/ClutchdenWebLogo.svg" />
     </Helmet>
   );
 }

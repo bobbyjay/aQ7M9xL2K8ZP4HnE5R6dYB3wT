@@ -62,6 +62,7 @@ dist/
 # TernJS port file
 .tern-port  
 
+.react-router
 
 # Editor directories and files
 .vscode/*

@@ -10,6 +10,11 @@ const AuthContext = createContext(null);
 export { AuthContext };
 export const useAuth = () => useContext(AuthContext);
 
+const getStoredToken = () => {
+  if (typeof window === "undefined") return null;
+  return window.localStorage.getItem("token");
+};
+
 export function AuthProvider({ children }) {
   const navigate = useNavigate();
 
@@ -21,14 +26,14 @@ export function AuthProvider({ children }) {
   const [receiptLoading, setReceiptLoading] = useState(false);     
   const [receiptError, setReceiptError] = useState(null);
   const [profilePicUrl, setProfilePicUrl] = useState(null);
-  const [desktopWidthSize, setDesktopWidthSize] = useState(window.innerWidth >= 1000);
+  const [desktopWidthSize, setDesktopWidthSize] = useState(typeof window !== "undefined" ? window.innerWidth >= 1000 : true);
 
   /* ---------------------------------------------------------
      🔄 INJECT TOKEN GETTER INTO api.js
   --------------------------------------------------------- */
 
   // 🔥 CONNECT AuthContext → Axios
-  setTokenGetter(() => localStorage.getItem("token"));
+  setTokenGetter(() => getStoredToken());
 
   /* ---------------------------------------------------------
      🔵 Load profile picture
@@ -64,7 +69,7 @@ export function AuthProvider({ children }) {
     let mounted = true;
 
     async function loadUser() {
-      const token = localStorage.getItem("token");
+      const token = getStoredToken();
  
      // No token → stop loading and exit
       if (!token) {

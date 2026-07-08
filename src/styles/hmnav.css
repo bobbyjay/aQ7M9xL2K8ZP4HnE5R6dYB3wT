@@ -91,13 +91,9 @@
 }
 
 .hmnav-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
   padding: 12px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr auto;
   background: linear-gradient(
     180deg, 
     #0b1e33 0%, 
@@ -114,7 +110,8 @@
 }
 
 .hmnav-actions {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
   gap: 12px;
 }
 

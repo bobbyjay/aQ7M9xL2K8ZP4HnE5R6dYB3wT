@@ -36,11 +36,7 @@ import { useEffect, useState, useRef, useMemo} from 'react';
 import Seo from '../components/Seo';
 
 function HomeContent() {
-  const { 
-    getLatestNews,
-    desktopWidthSize,
-    setDesktopWidthSize,
-  } = useAuth();
+  const { getLatestNews } = useAuth();
 
   const navigate = useNavigate();
   const { setShowMenuBar } = useMenu();
@@ -49,7 +45,9 @@ function HomeContent() {
   const bannerRef = useRef(null);
   const [navbarHeight, setNavbarHeight] = useState(0);
   const [showAllFeatures, setShowAllFeatures] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [isDesktopView, setIsDesktopView] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth >= 1000 : true
+  );
   
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
@@ -89,16 +87,32 @@ function HomeContent() {
 
 
   // handler for "View All" button on click shows all the popular sports features 
-  const handleViewAllBtn = () => {
-    setShowAllFeatures(true);
+  const handleViewAllBtn = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setShowAllFeatures((prev) => {
+      const nextValue = !prev;
+      console.log("showAllFeatures ->", nextValue);
+      return nextValue;
+    });
   }
   
   useEffect(() => {
     if (!bannerRef.current || !navbarRef.current) return;
-    if (!imageLoaded) return; // wait until image is loaded
 
-    // Store navbar height for placeholder when fixed
-    setNavbarHeight(navbarRef.current.offsetHeight);
+    const updateNavbarLayout = () => {
+      if (!navbarRef.current) return;
+
+      const nextHeight = navbarRef.current.offsetHeight || 0;
+      setNavbarHeight(nextHeight);
+
+      if (bannerRef.current) {
+        const rect = bannerRef.current.getBoundingClientRect();
+        setIsFixed(rect.bottom <= 0);
+      }
+
+      setIsDesktopView(window.innerWidth >= 1000);
+    };
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -110,12 +124,27 @@ function HomeContent() {
 
     observer.observe(bannerRef.current);
 
-    return () => observer.disconnect();
-  }, [imageLoaded]); // re-run effect when imageLoaded changes
+    const resizeObserver = new ResizeObserver(() => {
+      window.requestAnimationFrame(updateNavbarLayout);
+    });
 
-  useEffect(() => { 
-    const img = new Image(); img.onload = () => setImageLoaded(true); 
-    img.src = coin1x; 
+    resizeObserver.observe(navbarRef.current);
+
+    const handleViewportChange = () => {
+      window.requestAnimationFrame(updateNavbarLayout);
+    };
+
+    handleViewportChange();
+
+    window.addEventListener('resize', handleViewportChange, { passive: true });
+    window.addEventListener('orientationchange', handleViewportChange, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', handleViewportChange);
+      window.removeEventListener('orientationchange', handleViewportChange);
+    };
   }, []);
   
   // --- Filtered Results (Memoized + Debounced) ---
@@ -258,16 +287,6 @@ function HomeContent() {
 
   const fetchedNews = useRef(false);
 
-  /* ---------------- HANDLE WINDOW RESIZE ---------------- */
-  useEffect(() => {
-    const handleResize = () => {
-      setDesktopWidthSize(window.innerWidth >= 1000);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [setDesktopWidthSize]);
-
   /* ---------------- Prevent double API calls + Retry Logic ---------------- */
   useEffect(() => {
     if (fetchedNews.current) return;
@@ -378,47 +397,15 @@ function HomeContent() {
     fetchLatestNews();
   }, []);
 
-  if (!imageLoaded) {
-    return (
-      <div className="loader-overlay">
-        <svg className="spinner" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                      <circle cx="12" cy="2" r="0" fill="#3b82f6">
-                        <animate attributeName="r" begin="0" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate>
-                      </circle>
-                      <circle cx="12" cy="2" r="0" fill="#3b82f6" transform="rotate(45 12 12)">
-                        <animate attributeName="r" begin="0.125s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate>
-                      </circle>
-                      <circle cx="12" cy="2" r="0" fill="#3b82f6" transform="rotate(90 12 12)">
-                        <animate attributeName="r" begin="0.25s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate>
-                      </circle>
-                      <circle cx="12" cy="2" r="0" fill="#3b82f6" transform="rotate(135 12 12)">
-                        <animate attributeName="r" begin="0.375s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate>
-                      </circle>
-                      <circle cx="12" cy="2" r="0" fill="#3b82f6" transform="rotate(180 12 12)">
-                        <animate attributeName="r" begin="0.5s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate>
-                      </circle>
-                      <circle cx="12" cy="2" r="0" fill="#3b82f6" transform="rotate(225 12 12)">
-                        <animate attributeName="r" begin="0.625s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate>
-                      </circle>
-                      <circle cx="12" cy="2" r="0" fill="#3b82f6" transform="rotate(270 12 12)">
-                        <animate attributeName="r" begin="0.75s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate>
-                      </circle>
-                      <circle cx="12" cy="2" r="0" fill="#3b82f6" transform="rotate(315 12 12)">
-                        <animate attributeName="r" begin="0.875s" calcMode="spline" dur="1s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate>
-                      </circle>
-        </svg>
-      </div>
-    );
-  }
-
   return (
-    <MenuProvider>
     <div className="homepage-root" onClick={() => setShowMenuBar(false)}>
       {/* NAVBAR */}
       <header className="home-header">
         <div ref={bannerRef} className='top-adds-banna'>ads stays here</div>
-        <nav ref={navbarRef} className={`stagnantnav ${isFixed ? 'fixed' : ''}`}>
-          <HmNav />
+        <div id="banner"></div>
+        <nav id="stagnantnav" class="stagnantnav">
+          {/* <HmNav /> */}
+          <div id='HmNav'></div>
         </nav>
       </header>
       {/* Placeholder to prevent jump */}
@@ -431,13 +418,7 @@ function HomeContent() {
         <section className="hero-section">
           <div className='wlc-banna-div'>
             <div className='wlc-banna'>
-              <img 
-                src={coin1x} 
-                alt="welcome banner" 
-                className='wlc-banna-img'
-                srcSet={`${coin1x} 1x, ${coin2x} 2x, ${coin3x} 3x`}
-                sizes="(max-width: 768px) 100vw, 800px"
-              />
+              <img class="wlc-banna-img"></img>
             </div>
             <div className='wlc-banna-content'>
               <h2 className='wlc-banna-txt'>THE GOLD STANDARD OF FANTASY SPORTS IS HERE</h2>
@@ -455,116 +436,18 @@ function HomeContent() {
                   className='searchIcon'
                 />
               </div>
-              <form onSubmit={handleSearchSubmit} className='search-form-containner'>
-                <input 
-                  type="text" 
-                  name="sports-search-engin" 
-                  id="sports-search-engin" 
-                  placeholder="Search for a sports game ..."
-                  className='search-input-box'
-                  value={search ?? ""} 
-                  onChange={(e) => {
-                    const nextValue = e.target.value;
-                    setSearch(nextValue);
-                    setActiveIndex(-1);
-
-                    if (!nextValue.trim()) {
-                      setResults([]);
-                      setShowDropdown(false);
-                    }
-                  }}
-                  onKeyDown={handleKeyDown}
-                  autoComplete="off"
-                />
-                <button type="submit" className="search-btn" disabled={!isSearchActive}>Search</button>
-              </form>
+              <div id="searchBarForm"></div>
             </div>
 
-            <div className='search-bar-Dropdown-container' ref={searchRef}>
-                  {showDropdown && results.length > 0 && (
-                    <div className="search-dropdown">
-                      {results.map((sport, index) => {
-                        const regex = new RegExp(`(${search})`, "gi");
-                        const highlighted = sport.replace(
-                          regex,
-                          (match) => `<span class="search-highlight">${match}</span>`
-                        );
-                        return (
-                          <div
-                            key={index}
-                            className={`search-item ${index === activeIndex ? "active" : ""}`}
-                            onClick={() => selectItem(sport)}
-                            dangerouslySetInnerHTML={{ __html: highlighted }}
-                          />
-                        );
-                      })}
-                    </div>
-                  )}
-            </div>
+            <div id="searchDropdownContainer"></div>
 
           </div>
 
           {/* types of sports */}
-          <div className={`types-of-sports-div ${desktopWidthSize ? "desktop" : "mobile"}`}>
+          <div className={`types-of-sports-div ${isDesktopView ? "desktop" : "mobile"}`}>
         
-            {desktopWidthSize ? (
+            <div className='scroll-typ-sports'></div>
 
-              <div className='scroll-typ-sports-desktop'>
-              
-                <div className='sports-ty-soccer'>
-                  <div className='sport-icon-div'><img src={soccerIcon} alt="soccer" className='sportIcon' /></div>
-                  <div className='sports-ty-name'>soccer</div>
-                </div>
-                <div className='sports-ty-nba'>
-                  <div className='sport-icon-div'><img src={basketballIcon} alt="basketball" className='sportIcon' /></div>
-                  <div className='sports-ty-name'>basketball</div>
-                </div>
-                <div className='sports-ty-tennis'>
-                  <div className='sport-icon-div'><img src={tennisIcon} alt="tennis" className='sportIcon' /></div>
-                  <div className='sports-ty-name'>tennis</div>
-                </div>
-                <div className='sports-ty-mlb'>
-                  <div className='sport-icon-div'><img src={baseballIcon} alt="baseball" className='sportIcon' /></div>
-                  <div className='sports-ty-name'>baseball</div>
-                </div>
-                <div className='sports-ty-cs2'>
-                  <div className='sport-icon-div'><img src={cs2Icon} alt="cs2" className='sportIcon' /></div>
-                  <div className='sports-ty-name'>cs2</div>
-                </div>
-              
-
-              </div>
-
-            ) : (
-              
-              <div className='scroll-typ-sports'>
-                <div className='scroll-typ-content'>
-                  <div className='sports-ty-soccer'>
-                    <div className='sport-icon-div'><img src={soccerIcon} alt="soccer" className='sportIcon' /></div>
-                    <div className='sports-ty-name'>soccer</div>
-                  </div>
-                  <div className='sports-ty-nba'>
-                    <div className='sport-icon-div'><img src={basketballIcon} alt="basketball" className='sportIcon' /></div>
-                    <div className='sports-ty-name'>basketball</div>
-                  </div>
-                  <div className='sports-ty-tennis'>
-                    <div className='sport-icon-div'><img src={tennisIcon} alt="tennis" className='sportIcon' /></div>
-                    <div className='sports-ty-name'>tennis</div>
-                  </div>
-                  <div className='sports-ty-mlb'>
-                    <div className='sport-icon-div'><img src={baseballIcon} alt="baseball" className='sportIcon' /></div>
-                    <div className='sports-ty-name'>baseball</div>
-                  </div>
-                  <div className='sports-ty-cs2'>
-                    <div className='sport-icon-div'><img src={cs2Icon} alt="cs2" className='sportIcon' /></div>
-                    <div className='sports-ty-name'>cs2</div>
-                  </div>
-                </div>
-              </div>
-              
-            )}
-
-          
           </div>
 
           {/* line divider */}
@@ -578,9 +461,16 @@ function HomeContent() {
               <img src={fireIcon} alt="fire" className='fireEmojiIcon'/>
             </div>
             <h2 className='popular-heading-txt'>Explore Our Popular Sports AI features</h2>
-            <button className='view-all-btn' onClick={handleViewAllBtn}>View All</button>
+            <button
+              type="button"
+              className='view-all-btn'
+              onClick={handleViewAllBtn}
+              aria-expanded={showAllFeatures}
+            >
+              {showAllFeatures ? 'Show Less' : 'View All'}
+            </button>
           </div>
-          <div className='populer-sports-div-containner'>
+          <div className='populer-sports-div-containner' data-feature-state={showAllFeatures ? 'expanded' : 'collapsed'}>
             <div className='populer-sports-div'>
               <div className='populer-sports-grid'>
                 <div className='populer-sport-card'>
@@ -617,39 +507,43 @@ function HomeContent() {
               </div>
             </div>
 
-            <div className='populer-sports-div' style={{display: showAllFeatures ? "block" : "none"}}>
-              {/* Add more popular sport cards as needed */}
-              <div className='populer-sport-card'>
-                <div className='populer-sport-image-div'>   
-                  <img src={addimage2} alt="gold rush" className='populer-sport-image' />
+            {showAllFeatures && (
+              <>
+                <div className='populer-sports-div'>
+                  {/* Add more popular sport cards as needed */}
+                  <div className='populer-sport-card'>
+                    <div className='populer-sport-image-div'>   
+                      <img src={addimage2} alt="gold rush" className='populer-sport-image' />
+                    </div>
+                    <div className='populer-sport-content'>
+                      <h3 className='populer-sport-title'>Safe Bet: Risk-Aware Insights</h3>
+                      <p className='populer-sport-desc'>Introducing Safe Bet, our risk-aware insights feature designed to help you make informed decisions while managing your exposure. With a focus on responsible betting, Safe Bet provides data-driven recommendations that prioritize sustainability and long-term success.</p>
+                      <button
+                        className='click-to-try-btn'
+                        onClick={() => (window.location.href = "/bets")}
+                      >Try Safe Bet</button>
+                    </div>
+                  </div>
                 </div>
-                <div className='populer-sport-content'>
-                  <h3 className='populer-sport-title'>Safe Bet: Risk-Aware Insights</h3>
-                  <p className='populer-sport-desc'>Introducing Safe Bet, our risk-aware insights feature designed to help you make informed decisions while managing your exposure. With a focus on responsible betting, Safe Bet provides data-driven recommendations that prioritize sustainability and long-term success.</p>
-                  <button
-                    className='click-to-try-btn'
-                    onClick={() => (window.location.href = "/bets")}
-                  >Try Safe Bet</button>
-                </div>
-              </div>
-            </div>
 
-            <div className='populer-sports-div' style={{display: showAllFeatures ? "block" : "none"}}>
-              {/* Add more popular sport cards as needed */}
-              <div className='populer-sport-card'>
-                <div className='populer-sport-image-div'>
-                  <img src={addimage3} alt="gold rush" className='populer-sport-image' />
+                <div className='populer-sports-div'>
+                  {/* Add more popular sport cards as needed */}
+                  <div className='populer-sport-card'>
+                    <div className='populer-sport-image-div'>
+                      <img src={addimage3} alt="gold rush" className='populer-sport-image' />
+                    </div>
+                    <div className='populer-sport-content'>
+                      <h3 className='populer-sport-title'>ClutchDen Embedded: Real-Time Analytics</h3>
+                      <p className='populer-sport-desc'>Experience the future of sports betting with ClutchDen Embedded. Our real-time analytics feature provides you with instant insights and data-driven recommendations directly within your betting interface, allowing you to make informed decisions at the moment of action.</p>
+                      <button
+                        className='click-to-try-btn'
+                        onClick={() => (window.location.href = "/bets")}
+                      >Try ClutchDen Embedded</button>
+                    </div>
+                  </div>
                 </div>
-                <div className='populer-sport-content'>
-                  <h3 className='populer-sport-title'>ClutchDen Embedded: Real-Time Analytics</h3>
-                  <p className='populer-sport-desc'>Experience the future of sports betting with ClutchDen Embedded. Our real-time analytics feature provides you with instant insights and data-driven recommendations directly within your betting interface, allowing you to make informed decisions at the moment of action.</p>
-                  <button
-                    className='click-to-try-btn'
-                    onClick={() => (window.location.href = "/bets")}
-                  >Try ClutchDen Embedded</button>
-                </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
 
         </section>
@@ -661,22 +555,24 @@ function HomeContent() {
             <h2>Latest Sports News</h2>
           </div>
 
+          <div id="newsLateast"></div>
+
           {/* Loading State */}
-          {newsLoading && (
+          {/* {newsLoading && (
             <div className="news-grid skeleton-grid">
 
               <div className="featured-news skeleton"></div>
 
             </div>
-          )}
+          )} */}
 
           {/* No Data */}
-          {!newsLoading && !newsError && latestNews.length === 0 && (
+          {/* {!newsLoading && !newsError && latestNews.length === 0 && (
             <p>No news available.</p>
-          )}
+          )} */}
 
           {/* Actual Content */}
-          {!newsLoading && latestNews.length > 0 && (
+          {/* {!newsLoading && latestNews.length > 0 && (
             <div className="news-grid">
 
               <div className="featured-news">
@@ -703,7 +599,7 @@ function HomeContent() {
               </div>
 
             </div>
-          )}
+          )} */}
 
         </section>
 
@@ -867,7 +763,6 @@ function HomeContent() {
         <Footersection />
       </footer>
     </div>
-    </MenuProvider>
   );
 }
 
