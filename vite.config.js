@@ -10,4 +10,8 @@ export default defineConfig({
       presets: [vercelPreset()],
     }),
   ],
+  // Add this block right below your plugins list
+  ssr: {
+    noExternal: ["react-helmet-async"],
+  },
 });
