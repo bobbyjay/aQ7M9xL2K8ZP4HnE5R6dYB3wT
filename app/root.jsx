@@ -9,8 +9,9 @@ import {
   useMatches,
 } from "react-router";
 
-// Use standard named imports for Vite's compiler
-import { HelmetProvider } from "react-helmet-async";
+// Grab the entire module as a namespace object for flawless ESM/CommonJS interop
+import * as ReactHelmetAsync from "react-helmet-async";
+const HelmetProvider = ReactHelmetAsync.HelmetProvider || (ReactHelmetAsync.default && ReactHelmetAsync.default.HelmetProvider);
 
 import { AuthProvider } from "../src/context/AuthContext";
 import { MenuProvider } from "../src/context/MenuContext";
