@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { reactRouter } from "@react-router/dev/vite";
 import { vercelPreset } from "@vercel/react-router/vite";
+import path from "path";
 
 export default defineConfig({
   plugins: [
@@ -10,8 +11,12 @@ export default defineConfig({
       presets: [vercelPreset()],
     }),
   ],
-  // Add this block right below your plugins list
-  ssr: {
-    noExternal: ["react-helmet-async"],
+  resolve: {
+    alias: {
+      // Directs Node/Vite to use the server-safe CommonJS file variant
+      "react-helmet-async": path.resolve(
+        "./node_modules/react-helmet-async/lib/index.js"
+      ),
+    },
   },
 });
