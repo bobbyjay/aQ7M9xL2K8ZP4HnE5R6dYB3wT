@@ -9,9 +9,8 @@ import {
   useMatches,
 } from "react-router";
 
-// Fix the ESM Interop issue by importing the package default
-import pkg from "react-helmet-async";
-const { HelmetProvider } = pkg;
+// Use standard named imports for Vite's compiler
+import { HelmetProvider } from "react-helmet-async";
 
 import { AuthProvider } from "../src/context/AuthContext";
 import { MenuProvider } from "../src/context/MenuContext";
