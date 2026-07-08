@@ -9,7 +9,10 @@ import {
   useMatches,
 } from "react-router";
 
-import { HelmetProvider } from "react-helmet-async";
+// Fix the ESM Interop issue by importing the package default
+import pkg from "react-helmet-async";
+const { HelmetProvider } = pkg;
+
 import { AuthProvider } from "../src/context/AuthContext";
 import { MenuProvider } from "../src/context/MenuContext";
 
@@ -18,13 +21,10 @@ import "../src/index.css";
 export default function Root() {
   const matches = useMatches();
 
-  // console.log(matches);
-
   const scripts = matches.flatMap((match) => {
     return match.handle?.scripts ?? [];
   });
 
-  //script a module
   const scriptModule = matches.flatMap((match) => {
     return match.handle?.scriptModule ?? [];
   });
