@@ -5,7 +5,7 @@
   container.innerHTML = `
     <div class="hmnav-container">
       <div class="hmnav-logo">
-        <img src="src/assets/clutchdenEmbedded.svg" alt="ClutchDen Logo">
+        <img src="/assets/clutchdenEmbedded.svg" alt="ClutchDen Logo">
       </div>
       
       <!-- action button -->

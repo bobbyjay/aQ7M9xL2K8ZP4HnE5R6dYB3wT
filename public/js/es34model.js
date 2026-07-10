@@ -1,5 +1,5 @@
 // public/js/es34model.js
-import API from "../api/api.js";
+const API_BASE = "https://clutchden-api-server.onrender.com/api";
 
 const coin1x = "/assets/Coins-ftsy-spts-ptrms-emb@1x.webp";
 const coin2x = "/assets/Coins-ftsy-spts-ptrms-emb@2x.webp";
@@ -44,8 +44,14 @@ async function renderLatestNews() {
   `;
 
   try {
-    const response = await API.getLatestNews();
-    const latestNews = response.data;
+    const response = await fetch(`${API_BASE}/news/latest`, {
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!response.ok) {
+      throw new Error(`News fetch failed: ${response.status}`);
+    }
+
+    const latestNews = await response.json();
 
     if (!Array.isArray(latestNews) || latestNews.length === 0) {
       container.innerHTML = "<p>No news available.</p>";
