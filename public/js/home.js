@@ -28,23 +28,23 @@
           <div class="scroll-typ-sports-desktop">
             <!-- Desktop Content -->
             <div class='sports-ty-soccer'>
-              <div class='sport-icon-div'><img src="src/assets/soccerIcon.svg" alt="soccer" class='sportIcon' width="50" height="50" /></div>
+              <div class='sport-icon-div'><img src="/assets/soccerIcon.svg" alt="soccer" class='sportIcon' width="50" height="50" /></div>
               <div class='sports-ty-name'>soccer</div>
             </div>
             <div class='sports-ty-nba'>
-              <div class='sport-icon-div'><img src="src/assets/basketballIcon.svg" alt="basketball" class='sportIcon' width="50" height="50" /></div>
+              <div class='sport-icon-div'><img src="/assets/basketballIcon.svg" alt="basketball" class='sportIcon' width="50" height="50" /></div>
               <div class='sports-ty-name'>basketball</div>
             </div>
             <div class='sports-ty-tennis'>
-              <div class='sport-icon-div'><img src="src/assets/tennisIcon.svg" alt="tennis" class='sportIcon' width="50" height="50" /></div>
+              <div class='sport-icon-div'><img src="/assets/tennisIcon.svg" alt="tennis" class='sportIcon' width="50" height="50" /></div>
               <div class='sports-ty-name'>tennis</div>
             </div>
             <div class='sports-ty-mlb'>
-              <div class='sport-icon-div'><img src="src/assets/baseballIcon.svg" alt="baseball" class='sportIcon' width="50" height="50" /></div>
+              <div class='sport-icon-div'><img src="/assets/baseballIcon.svg" alt="baseball" class='sportIcon' width="50" height="50" /></div>
               <div class='sports-ty-name'>baseball</div>
             </div>
             <div class='sports-ty-cs2'>
-              <div class='sport-icon-div'><img src="src/assets/cs2Icon.svg" alt="cs2" class='sportIcon' width="50" height="50" /></div>
+              <div class='sport-icon-div'><img src="/assets/cs2Icon.svg" alt="cs2" class='sportIcon' width="50" height="50" /></div>
               <div class='sports-ty-name'>cs2</div>
             </div>
           </div>
@@ -56,23 +56,23 @@
                 <div class="scroll-typ-content">
                     <div class='scroll-typ-content'>
                       <div class='sports-ty-soccer'>
-                        <div class='sport-icon-div'><img src="src/assets/soccerIcon.svg" alt="soccer" class='sportIcon' /></div>
+                        <div class='sport-icon-div'><img src="/assets/soccerIcon.svg" alt="soccer" class='sportIcon' /></div>
                         <div class='sports-ty-name'>soccer</div>
                       </div>
                       <div class='sports-ty-nba'>
-                        <div class='sport-icon-div'><img src="src/assets/basketballIcon.svg" alt="basketball" class='sportIcon' /></div>
+                        <div class='sport-icon-div'><img src="/assets/basketballIcon.svg" alt="basketball" class='sportIcon' /></div>
                         <div class='sports-ty-name'>basketball</div>
                       </div>
                       <div class='sports-ty-tennis'>
-                        <div class='sport-icon-div'><img src="src/assets/tennisIcon.svg" alt="tennis" class='sportIcon' /></div>
+                        <div class='sport-icon-div'><img src="/assets/tennisIcon.svg" alt="tennis" class='sportIcon' /></div>
                         <div class='sports-ty-name'>tennis</div>
                       </div>
                       <div class='sports-ty-mlb'>
-                        <div class='sport-icon-div'><img src="src/assets/baseballIcon.svg" alt="baseball" class='sportIcon' /></div>
+                        <div class='sport-icon-div'><img src="/assets/baseballIcon.svg" alt="baseball" class='sportIcon' /></div>
                         <div class='sports-ty-name'>baseball</div>
                       </div>
                       <div class='sports-ty-cs2'>
-                        <div class='sport-icon-div'><img src="src/assets/cs2Icon.svg" alt="cs2" class='sportIcon' /></div>
+                        <div class='sport-icon-div'><img src="/assets/cs2Icon.svg" alt="cs2" class='sportIcon' /></div>
                         <div class='sports-ty-name'>cs2</div>
                       </div>
                     </div>
