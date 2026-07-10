@@ -1,9 +1,9 @@
 // scr/js/es34model.js
 import API from "../api/api.js";
 
-const coin1x = "../src/assets/Coins-ftsy-spts-ptrms-emb@1x.webp";
-const coin2x = "../src/assets/Coins-ftsy-spts-ptrms-emb@2x.webp";
-const coin3x = "../src/assets/Coins-ftsy-spts-ptrms-emb@3x.webp";
+const coin1x = "../assets/Coins-ftsy-spts-ptrms-emb@1x.webp";
+const coin2x = "../assets/Coins-ftsy-spts-ptrms-emb@2x.webp";
+const coin3x = "../assets/Coins-ftsy-spts-ptrms-emb@3x.webp";
 
 function updateWelcomeBanner() {
   const img = document.querySelector(".wlc-banna-img");
