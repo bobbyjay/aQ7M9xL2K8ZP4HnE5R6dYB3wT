@@ -1,6 +1,6 @@
 import Home from "../../src/pages/Home";
 import Seo from "../../src/components/Seo";
-import es34ModelUrl from "../../src/js/es34model.js?url";
+import "../../src/js/es34model.js?url";
 
 export const handle = {
   scripts: [
@@ -9,7 +9,9 @@ export const handle = {
     // "/js/analytics.js",
   ],
 
-  scriptModule: [es34ModelUrl],
+  // scriptModule: [
+  //   es34ModelUrl
+  // ],
 };
 
 export default function HomeRoute() {

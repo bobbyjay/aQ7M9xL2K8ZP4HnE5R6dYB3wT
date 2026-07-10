@@ -9,9 +9,9 @@ export const handle = {
     // "/js/analytics.js",
   ],
 
-  scriptModule: [
-    es34ModelUrl,
-  ],
+  // scriptModule: [
+  //   es34ModelUrl,
+  // ],
   
 };
 
